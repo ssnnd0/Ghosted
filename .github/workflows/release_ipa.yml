@@ -1,0 +1,46 @@
+name: Build and Publish IPA Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Triggers when you push a tag like v1.0.0
+  workflow_dispatch:  # Allows manual triggering from the Actions tab
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+    permissions:
+      contents: write  # Needed to create releases and upload assets
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 'latest-stable'
+
+      - name: Build Archive & Export IPA
+        run: |
+          # 1. Build Xcode archive without code signing
+          xcodebuild archive \
+            -project Ghosted.xcodeproj \
+            -scheme Ghosted \
+            -sdk iphoneos \
+            -archivePath $HOME/build/Ghosted.xcarchive \
+            CODE_SIGNING_ALLOWED=NO
+
+          # 2. Package into an .ipa file
+          mkdir -p $HOME/build/Payload
+          cp -r $HOME/build/Ghosted.xcarchive/Products/Applications/*.app $HOME/build/Payload/
+          cd $HOME/build
+          zip -r Ghosted.ipa Payload
+
+      - name: Create Release and Upload IPA
+        uses: softprops/action-gh-release@v2
+        with:
+          files: /Users/runner/build/Ghosted.ipa
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
