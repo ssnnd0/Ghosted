@@ -1,6 +1,8 @@
 # Ghosted
 
-Ghosted is a Swift package and iOS app shell for route-aware, camera-aware location simulation. The project keeps the portable routing and movement logic separate from the device-specific spoofing layer so it can be tested on a normal machine while the final live-device handshake remains isolated to the iPhone runtime.
+Ghosted is a Swift package and iOS app shell for route-aware, camera-aware location simulation. The project keeps the portable routing and movement logic separate from the device-specific spoofing mechanisms.
+
+> **⚠️ DISCLAIMER:** This application is provided for educational and authorized testing purposes only. Users are responsible for ensuring their use complies with all applicable laws and regulations in their jurisdiction. See the LICENSE file for full liability disclaimers.
 
 ## Project status
 
@@ -12,10 +14,10 @@ Ghosted is a Swift package and iOS app shell for route-aware, camera-aware locat
 
 The repo is intentionally split:
 
-- GhostedCore: geodesy, route/path logic, quadtree camera indexing, route avoidance, movement simulation, route risk summary
-- Ghosted app: minimal iOS shell and runtime entry point
-- Spoofing layer: pairing, DDI management, route streaming, loopback reachability, heartbeat and recovery
-- Alert layer: proximity warning logic while a fake GPS stream is active
+- **GhostedCore**: geodesy, route/path logic, quadtree camera indexing, route avoidance, movement simulation, route risk summary
+- **Ghosted app**: minimal iOS shell and runtime entry point
+- **Spoofing layer**: pairing, DDI management, route streaming, loopback reachability, heartbeat and recovery
+- **Alert layer**: proximity warning logic while a fake GPS stream is active
 
 ## Quick start
 
@@ -58,7 +60,6 @@ The live runtime contract is defined by these requirements:
 The project is kept green with Swift tests and the portable logic remains validation-ready on the host machine.
 
 ```bash
-cd c:/Users/Sandro/Documents/GitHub/Ghosted
 swift test
 ```
 
@@ -69,6 +70,7 @@ The current suite is passing with 52 tests in 10 suites and 0 failures.
 - ARCHITECTURE.md
 - AUDIT.md
 - README.md
+- LICENSE
 - App/
 - Config/
 - Sources/
@@ -78,3 +80,14 @@ The current suite is passing with 52 tests in 10 suites and 0 failures.
 ## Dolphin companion files
 
 The Dolphin folder contains the runtime checklist and companion notes for the on-device validation pass.
+
+## License
+
+This project is licensed under a modified MIT License with enhanced liability disclaimers. See the LICENSE file for details.
+
+## Legal Notice
+
+By using this software, you agree that:
+- The authors and contributors assume no liability for any damages or legal consequences resulting from your use of this application.
+- You are solely responsible for ensuring your use complies with all applicable local, state, and federal laws.
+- You use this software at your own risk.
