@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Ghosted}",
+            "name": "Debug Ghosted",
+            "target": "Ghosted",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug Ghosted"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Ghosted}",
+            "name": "Release Ghosted",
+            "target": "Ghosted",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release Ghosted"
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Intentionally empty.
+
+         Entitlements are NOT Info.plist keys; they are signed into the binary. This design needs none:
+         it reaches the device's developer services through a pairing file + a loopback VPN app
+         (a separate app), not through privileged APIs. That is what keeps it installable with
+         AltStore/SideStore, which re-sign the app under your Apple ID and reject or strip entitlements
+         your profile doesn't allow (a free account can't grant Network Extension, for example).
+
+         Optional, paid developer account only — raises the memory ceiling if you push huge datasets:
+         <key>com.apple.developer.kernel.increased-memory-limit</key><true/>
+    -->
+</dict>
+</plist>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>en</string>
+    <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>Ghosted</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>CFBundleShortVersionString</key><string>1.0</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>LSRequiresIPhoneOS</key><true/>
+    <key>MinimumOSVersion</key><string>17.4</string>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array><string>arm64</string></array>
+    <key>UILaunchScreen</key><dict/>
+    <key>UIApplicationSceneManifest</key>
+    <dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
+    <key>UISupportedInterfaceOrientations</key>
+    <array><string>UIInterfaceOrientationPortrait</string></array>
+
+    <!-- Keeps the 1 Hz location stream alive with the screen locked. BOTH are required:
+         `location` is what makes allowsBackgroundLocationUpdates legal (crashes without it),
+         `audio` is what the silent-loop keep-alive relies on. -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+        <string>location</string>
+    </array>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Shows your position on the map and keeps navigation running.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Keeps navigation and camera alerts running while the screen is locked.</string>
+
+    <!-- The app talks to this device's own developer services through the loopback VPN. -->
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Connects to this device's own developer services through the on-device loopback VPN.</string>
+
+    <!-- Lets you drop the pairing file / DDI folder into the app via the Files app. -->
+    <key>UIFileSharingEnabled</key><true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key><true/>
+
+    <!-- Read at runtime: GMSServices.provideAPIKey(Bundle.main.object(forInfoDictionaryKey: "GMSApiKey") as! String)
+         Set GMS_API_KEY in an .xcconfig that is NOT committed. -->
+    <key>GMSApiKey</key><string>$(GMS_API_KEY)</string>
+
+    <key>ITSAppUsesNonExemptEncryption</key><false/>
+</dict>
+</plist>
