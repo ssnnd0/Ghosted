@@ -30,40 +30,43 @@ jobs:
             pod install
           fi
 
-      - name: Build for iOS
+      - name: Build for iOS (device arm64, unsigned)
         run: |
           xcodebuild \
             -scheme Ghosted \
             -configuration Release \
             -derivedDataPath build \
-            -arch arm64 \
+            -destination 'generic/platform=iOS' \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             build
 
-      - name: Create IPA
+      - name: Package unsigned IPA
+        # -exportArchive cannot run without a signing identity, so the .app is
+        # zipped into an unsigned IPA by hand. It must be re-signed (free Personal
+        # Team or a paid team) before it can be installed on a device.
         run: |
-          xcodebuild \
-            -scheme Ghosted \
-            -configuration Release \
-            -derivedDataPath build \
-            -arch arm64 \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            -allowProvisioningUpdates \
-            -exportOptionsPlist ExportOptions.plist \
-            -exportPath build/ipa \
-            archive
+          APP="build/Build/Products/Release-iphoneos/Ghosted.app"
+          test -d "$APP" || { echo "::error::Built app not found at $APP"; exit 1; }
+          rm -rf build/ipa
+          mkdir -p build/ipa/Payload
+          cp -R "$APP" build/ipa/Payload/
+          ( cd build/ipa && zip -qry "$GITHUB_WORKSPACE/Ghosted-unsigned.ipa" Payload )
+          ls -lh Ghosted-unsigned.ipa
+          echo "Unsigned IPA built. Re-sign it with a development team to install on a device."
 
       - name: Verify IPA
         run: |
-          ls -lh build/ipa/*.ipa || echo "IPA not found in expected location"
+          unzip -l Ghosted-unsigned.ipa | head -20
+          unzip -l Ghosted-unsigned.ipa | grep -q 'Payload/Ghosted.app/Ghosted' \
+            || { echo "::error::Ghosted binary missing from IPA"; exit 1; }
+          echo "IPA contents verified."
 
       - name: Upload IPA as artifact
         uses: actions/upload-artifact@v4
         with:
           name: Ghosted-IPA
-          path: build/ipa/*.ipa
+          path: Ghosted-unsigned.ipa
           retention-days: 30
         if: success()
 
@@ -73,8 +76,10 @@ jobs:
           echo "## iOS Build Summary" >> $GITHUB_STEP_SUMMARY
           echo "- **Scheme**: Ghosted" >> $GITHUB_STEP_SUMMARY
           echo "- **Configuration**: Release" >> $GITHUB_STEP_SUMMARY
-          echo "- **Architecture**: arm64" >> $GITHUB_STEP_SUMMARY
-          echo "- **Build Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Architecture**: arm64 (generic/platform=iOS)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Signing**: disabled in CI (no Apple Developer account)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Artifact**: Ghosted-unsigned.ipa (must be re-signed to install)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Date**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
 
   release:
     needs: build
@@ -89,7 +94,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Ghosted-IPA
-          path: ./ipa
+          path: .
 
       - name: Get version from tag or commit
         id: version
@@ -105,7 +110,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./ipa/*.ipa
+          files: ./Ghosted-unsigned.ipa
           tag_name: ${{ steps.version.outputs.version }}
           name: Ghosted ${{ steps.version.outputs.version }}
           body: |
@@ -116,13 +121,31 @@ jobs:
             **Commit**: ${{ github.sha }}
 
             ### Contents
-            - Ghosted.ipa - The compiled iOS application package
+            - `Ghosted-unsigned.ipa` — compiled arm64 app bundle, **unsigned**
 
-            ### Installation
-            You can install this IPA on an authorized device using:
-            - Xcode and a connected device
-            - Apple Configurator 2
-            - Third-party tools like ios-app-installer
+            ### Important: this IPA is not installable as-is
+            CI has no Apple Developer account, so the binary is not signed and there
+            is no provisioning profile. To install it you must sign it with your
+            own team.
+
+            **Option A — build locally (recommended)**
+            1. Open `Ghosted.xcodeproj` in Xcode.
+            2. Xcode → Settings → Accounts → `+` → sign in with your Apple ID.
+            3. Select the `Ghosted` target → Signing & Capabilities →
+               tick **Automatically manage signing** → choose your **Personal Team**.
+            4. Change the bundle identifier to something unique, e.g. `com.yourname.ghosted`.
+            5. Enable Developer Mode on the iPhone:
+               Settings → Privacy & Security → Developer Mode → On (reboot when prompted).
+            6. Connect and trust the iPhone, pick it in the deployment menu, press Run.
+            7. If the app will not open ("Untrusted Developer"):
+               Settings → General → VPN & Device Management → your Apple ID → Trust.
+
+            Free Personal Team provisioning expires after 7 days and is limited to
+            3 devices / 10 app IDs. Re-run steps 3-6 after expiry.
+
+            **Option B — re-sign the downloaded IPA**
+            Use a tool such as `ios-app-installer`, or run Xcode's
+            `Product → Archive` flow locally against this source.
 
             ### Legal Notice
             Please review the LICENSE and README for important disclaimers and usage restrictions.

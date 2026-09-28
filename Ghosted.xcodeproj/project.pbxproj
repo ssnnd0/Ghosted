@@ -9,7 +9,6 @@
         0100000000000000 /* GhostedCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1100000000000000 /* GhostedCore.framework */; };
         0200000000000000 /* App/GhostedApp.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1200000000000000 /* App/GhostedApp.swift */; };
         0300000000000000 /* Ghosted/LaunchScreen.storyboard in Resources */ = { isa = PBXBuildFile; fileRef = 1300000000000000 /* Ghosted/LaunchScreen.storyboard */; };
-        0400000000000000 /* Ghosted/Info.plist in Resources */ = { isa = PBXBuildFile; fileRef = 1400000000000000 /* Ghosted/Info.plist */; };
         0500000000000000 /* Ghosted/Assets.xcassets in Resources */ = { isa = PBXBuildFile; fileRef = 1500000000000000 /* Ghosted/Assets.xcassets */; };
         0600000000000000 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1600000000000000 /* UIKit.framework */; };
         0700000000000000 /* AvoidanceRouter.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1700000000000000 /* AvoidanceRouter.swift */; };
@@ -18,22 +17,24 @@
         0A00000000000000 /* GeoMath.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1A00000000000000 /* GeoMath.swift */; };
         0B00000000000000 /* MovementSimulator.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1B00000000000000 /* MovementSimulator.swift */; };
         0C00000000000000 /* RouteExposureStatus.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1C00000000000000 /* RouteExposureStatus.swift */; };
+        0D00000000000000 /* RuntimeContract.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1F00000000000000 /* RuntimeContract.swift */; };
         /* End PBXBuildFile section */
 
         /* Begin PBXFileReference section */
         1100000000000000 /* GhostedCore.framework */ = { isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GhostedCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-        1200000000000000 /* App/GhostedApp.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/GhostedApp.swift; sourceTree = "<group>"; };
+        1200000000000000 /* GhostedApp.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostedApp.swift; sourceTree = "<group>"; };
         1300000000000000 /* Ghosted/LaunchScreen.storyboard */ = { isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
         1400000000000000 /* Ghosted/Info.plist */ = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
         1500000000000000 /* Ghosted/Assets.xcassets */ = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
         1600000000000000 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-        1700000000000000 /* AvoidanceRouter.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/AvoidanceRouter.swift"; sourceTree = "<group>"; };
-        1800000000000000 /* CameraIndex.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/CameraIndex.swift"; sourceTree = "<group>"; };
-        1900000000000000 /* Coordinate.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/Coordinate.swift"; sourceTree = "<group>"; };
-        1A00000000000000 /* GeoMath.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/GeoMath.swift"; sourceTree = "<group>"; };
-        1B00000000000000 /* MovementSimulator.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/MovementSimulator.swift"; sourceTree = "<group>"; };
-        1C00000000000000 /* RouteExposureStatus.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/RouteExposureStatus.swift"; sourceTree = "<group>"; };
+        1700000000000000 /* AvoidanceRouter.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvoidanceRouter.swift; sourceTree = "<group>"; };
+        1800000000000000 /* CameraIndex.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraIndex.swift; sourceTree = "<group>"; };
+        1900000000000000 /* Coordinate.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+        1A00000000000000 /* GeoMath.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoMath.swift; sourceTree = "<group>"; };
+        1B00000000000000 /* MovementSimulator.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovementSimulator.swift; sourceTree = "<group>"; };
+        1C00000000000000 /* RouteExposureStatus.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteExposureStatus.swift; sourceTree = "<group>"; };
         1D00000000000000 /* Ghosted.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghosted.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        1F00000000000000 /* RuntimeContract.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeContract.swift; sourceTree = "<group>"; };
         /* End PBXFileReference section */
 
         /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +46,8 @@
         3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
         3100000000000000 /* AppGroup */ = { isa = PBXGroup; children = (1200000000000000); name = App; path = App; sourceTree = "<group>"; };
         3200000000000000 /* GhostedResources */ = { isa = PBXGroup; children = (1300000000000000, 1400000000000000, 1500000000000000); name = Ghosted; path = Ghosted; sourceTree = "<group>"; };
-        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3100000000000000, 3200000000000000); sourceTree = "<group>"; };
+        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3100000000000000, 3400000000000000, 3200000000000000); sourceTree = "<group>"; };
+        3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
         /* End PBXGroup section */
 
         /* Begin PBXNativeTarget section */
@@ -103,7 +105,7 @@
 
         /* Begin PBXSourcesBuildPhase section */
         6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000); runOnlyForDeploymentPostprocessing = 0; };
-        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000); runOnlyForDeploymentPostprocessing = 0; };
         /* End PBXSourcesBuildPhase section */
 
         /* Begin PBXTargetDependency section */
@@ -199,8 +201,6 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-                CODE_SIGNING_ALLOWED = NO;
-                CODE_SIGNING_REQUIRED = NO;
                 CODE_SIGN_STYLE = Automatic;
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
@@ -222,8 +222,6 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-                CODE_SIGNING_ALLOWED = NO;
-                CODE_SIGNING_REQUIRED = NO;
                 CODE_SIGN_STYLE = Automatic;
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
