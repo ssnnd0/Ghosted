@@ -1,0 +1,145 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 56;
+    objects = {
+        0A1B2C3D4E5F67890 = {
+            isa = PBXBuildFile;
+            fileRef = 1E2F3A4B5C6D7E8F9 /* GhostedApp.swift */;
+        };
+        0F1E2D3C4B5A69788 = {
+            isa = PBXFileReference;
+            lastKnownFileType = sourcecode.swift;
+            path = GhostedApp.swift;
+            sourceTree = "<group>";
+        };
+        1E2F3A4B5C6D7E8F9 = {
+            isa = PBXFileReference;
+            lastKnownFileType = sourcecode.swift;
+            name = GhostedApp.swift;
+            path = App/GhostedApp.swift;
+            sourceTree = "<group>";
+        };
+        2109AB4C5D6E7F809 = {
+            isa = PBXGroup;
+            children = (
+                1E2F3A4B5C6D7E8F9,
+            );
+            path = App;
+            sourceTree = "<group>";
+        };
+        3A5B7C9D1E2F4A6B8 = {
+            isa = PBXGroup;
+            children = (
+                2109AB4C5D6E7F809,
+            );
+            name = Products;
+            sourceTree = "<group>";
+        };
+        4B2C3D4E5F67890A1 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 9C8D7E6F5A4B3C2D /* Build configuration list for PBXNativeTarget "Ghosted" */;
+            buildPhases = (
+                6E5D4C3B2A1908F7A /* Sources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+            );
+            name = Ghosted;
+            productName = Ghosted;
+            productReference = 5D4C3B2A1908F7A6 /* Ghosted */;
+            productType = "com.apple.product-type.tool";
+        };
+        5D4C3B2A1908F7A6 = {
+            isa = PBXFileReference;
+            explicitFileType = "compiled.mach-o.executable";
+            includeInIndex = 0;
+            path = Ghosted;
+            sourceTree = "BUILT_PRODUCTS_DIR";
+        };
+        6E5D4C3B2A1908F7A = {
+            isa = PBXSourcesBuildPhase;
+            files = (
+                0A1B2C3D4E5F67890,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        7F6E5D4C3B2A1908 = {
+            isa = PBXProject;
+            attributes = {
+                LastSwiftMigration = 9999;
+                LastUpgradeCheck = 1520;
+                TargetAttributes = {
+                    4B2C3D4E5F67890A1 = {
+                        CreatedOnToolsVersion = 15.0;
+                    };
+                };
+            };
+            buildConfigurationList = 8E7D6C5B4A39281F /* Build configuration list for PBXProject "Ghosted" */;
+            compatibilityVersion = "Xcode 14.0";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (
+                en,
+                Base,
+            );
+            mainGroup = 3A5B7C9D1E2F4A6B8;
+            productRefGroup = 3A5B7C9D1E2F4A6B8;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (
+                4B2C3D4E5F67890A1,
+            );
+        };
+        8E7D6C5B4A39281F = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                9A8B7C6D5E4F3A2B1,
+                9B8A7C6D5E4F3A2B1,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        9A8B7C6D5E4F3A2B1 = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                CURRENT_PROJECT_VERSION = 1;
+                MACOSX_DEPLOYMENT_TARGET = 14.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SDKROOT = macosx;
+                SWIFT_VERSION = 6.0;
+            };
+            name = Debug;
+        };
+        9B8A7C6D5E4F3A2B1 = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                CURRENT_PROJECT_VERSION = 1;
+                MACOSX_DEPLOYMENT_TARGET = 14.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                SDKROOT = macosx;
+                SWIFT_VERSION = 6.0;
+            };
+            name = Release;
+        };
+        9C8D7E6F5A4B3C2D = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                9A8B7C6D5E4F3A2B1,
+                9B8A7C6D5E4F3A2B1,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+    };
+    rootObject = 7F6E5D4C3B2A1908;
+}
