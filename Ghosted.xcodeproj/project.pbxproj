@@ -18,6 +18,10 @@
 		0A1B2C3D4E5F67D1 /* GhostedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B5C6D7E8F9A0B; };
 		0A1B2C3D4E5F67D9 /* GhostedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C6D7E8F9A0B1C; };
 		0A1B2C3D4E5F67E1 /* GhostedCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A4B5C6D7E8F9A; };
+		1F2A3B4C5D6E7F11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F10; };
+		1F2A3B4C5D6E7F21 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F20; };
+		1F2A3B4C5D6E7F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F30; };
+		2E3F4A5B6C7D8E9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F4A5B6C7D8E9E; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +37,7 @@
 			containerPortal = 7F6E5D4C3B2A1908;
 			proxyType = 1;
 			remoteGlobalIDString = 2A3B4C5D6E7F8A9B;
-			remoteInfo = Ghosted;
+			remoteInfo = GhostedApp;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -46,10 +50,14 @@
 		1E2F3A4B5C6D7EE9 /* GeoMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/GeoMath.swift"; sourceTree = "<group>"; };
 		1E2F3A4B5C6D7EF9 /* MovementSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/MovementSimulator.swift"; sourceTree = "<group>"; };
 		1E2F3A4B5C6D7F09 /* RouteExposureStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/RouteExposureStatus.swift"; sourceTree = "<group>"; };
+		1F2A3B4C5D6E7F10 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Ghosted/LaunchScreen.storyboard"; sourceTree = "<group>"; };
+		1F2A3B4C5D6E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ghosted/Info.plist"; sourceTree = "<group>"; };
+		1F2A3B4C5D6E7F30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Ghosted/Assets.xcassets"; sourceTree = "<group>"; };
+		2E3F4A5B6C7D8E9E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2F3A4B5C6D7E8F9A /* GhostedCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Build/GhostedCore.framework"; sourceTree = "<group>"; };
 		3A4B5C6D7E8F9A0B /* GhostedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/GhostedApp.swift"; sourceTree = "<group>"; };
 		4B5C6D7E8F9A0B1C /* GhostedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tests/GhostedTests/GhostedTests.swift"; sourceTree = "<group>"; };
-		5D4C3B2A1908F7A6 /* Ghosted */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ghosted; sourceTree = "BUILT_PRODUCTS_DIR"; };
+		5D4C3B2A1908F7A6 /* Ghosted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ghosted.app"; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		6B7C8D9E0F1A2B3C /* GhostedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GhostedTests.xctest"; sourceTree = "BUILT_PRODUCTS_DIR"; };
 		7A8B9CA0B1C2D3E4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,16 +65,18 @@
 /* Begin PBXFrameworksBuildPhase section */
 		1A2B3C4D5E6F7A8B /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67C9); runOnlyForDeploymentPostprocessing = 0; };
 		2B3C4D5E6F7A8B9C /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67E1); runOnlyForDeploymentPostprocessing = 0; };
+		2C3D4E5F6A7B8C0D /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (2E3F4A5B6C7D8E9F, 0A1B2C3D4E5F67C9); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0A1B2C3D4E5F6700 /* Products */ = {isa = PBXGroup; children = (2F3A4B5C6D7E8F9A, 5D4C3B2A1908F7A6, 6B7C8D9E0F1A2B3C); name = Products; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6708 /* Sources */ = {isa = PBXGroup; children = (0A1B2C3D4E5F6710, 0A1B2C3D4E5F6720, 3A4B5C6D7E8F9A0B); name = Sources; sourceTree = "<group>"; };
+		0A1B2C3D4E5F6708 /* Sources */ = {isa = PBXGroup; children = (0A1B2C3D4E5F6710, 0A1B2C3D4E5F6720); name = Sources; sourceTree = "<group>"; };
 		0A1B2C3D4E5F6710 /* GhostedCore */ = {isa = PBXGroup; children = (1E2F3A4B5C6D7EB9, 1E2F3A4B5C6D7EC9, 1E2F3A4B5C6D7ED9, 1E2F3A4B5C6D7EE9, 1E2F3A4B5C6D7EF9, 1E2F3A4B5C6D7F09); name = GhostedCore; path = "Sources/GhostedCore"; sourceTree = "<group>"; };
 		0A1B2C3D4E5F6720 /* Ghosted Executable */ = {isa = PBXGroup; children = (1E2F3A4B5C6D7E8F, 1E2F3A4B5C6D7EA1); name = "Ghosted Executable"; path = "Sources/Ghosted"; sourceTree = "<group>"; };
 		0A1B2C3D4E5F6738 /* Tests */ = {isa = PBXGroup; children = (4B5C6D7E8F9A0B1C); name = Tests; sourceTree = "<group>"; };
-		3A4B5C6D7E8F9A0B /* App Shell */ = {isa = PBXGroup; children = (3A4B5C6D7E8F9A0B); name = "App Shell"; path = App; sourceTree = "<group>"; };
-		3B5C6D7E8F9A0B1C /* Root */ = {isa = PBXGroup; children = (7A8B9CA0B1C2D3E4, 0A1B2C3D4E5F6708, 0A1B2C3D4E5F6738, 0A1B2C3D4E5F6700); name = Root; sourceTree = "<group>"; };
+		0A1B2C3D4E5F6750 /* Frameworks */ = {isa = PBXGroup; children = (2E3F4A5B6C7D8E9E); name = Frameworks; sourceTree = "<group>"; };
+		1F2A3B4C5D6E7F40 /* App */ = {isa = PBXGroup; children = (3A4B5C6D7E8F9A0B, 1F2A3B4C5D6E7F10, 1F2A3B4C5D6E7F20, 1F2A3B4C5D6E7F30); name = App; path = Ghosted; sourceTree = "<group>"; };
+		3B5C6D7E8F9A0B1C /* Root */ = {isa = PBXGroup; children = (7A8B9CA0B1C2D3E4, 0A1B2C3D4E5F6708, 1F2A3B4C5D6E7F40, 0A1B2C3D4E5F6738, 0A1B2C3D4E5F6750, 0A1B2C3D4E5F6700); name = Root; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -81,16 +91,16 @@
 			productReference = 2F3A4B5C6D7E8F9A;
 			productType = "com.apple.product-type.framework";
 		};
-		2A3B4C5D6E7F8A9B /* Ghosted */ = {
+		2A3B4C5D6E7F8A9B /* GhostedApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9C8D7E6F5A4B3C2D;
-			buildPhases = (0A1B2C3D4E5F67E9, 1A2B3C4D5E6F7A8B, 5F6A7B8C9D0E1F2A);
+			buildPhases = (2C3D4E5F6A7B8C0D, 0A1B2C3D4E5F67E9, 1A2B3C4D5E6F7A8B, 5F6A7B8C9D0E1F2A, 1F2A3B4C5D6E7F50);
 			buildRules = ();
 			dependencies = (0F1E2D3C4B5A6978);
-			name = Ghosted;
+			name = GhostedApp;
 			productName = Ghosted;
 			productReference = 5D4C3B2A1908F7A6;
-			productType = "com.apple.product-type.tool";
+			productType = "com.apple.product-type.application";
 		};
 		3B4C5D6E7F8A9B0C /* GhostedTests */ = {
 			isa = PBXNativeTarget;
@@ -109,11 +119,12 @@
 		7F6E5D4C3B2A1908 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = 1;
 				LastSwiftMigration = 9999;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					1F2A3B4C5D6E7F89 = {CreatedOnToolsVersion = 15.0; };
-					2A3B4C5D6E7F8A9B = {CreatedOnToolsVersion = 15.0; };
+					2A3B4C5D6E7F8A9B = {CreatedOnToolsVersion = 15.0; DevelopmentTeam = ""; ProvisioningStyle = Automatic; };
 					3B4C5D6E7F8A9B0C = {CreatedOnToolsVersion = 15.0; };
 				};
 			};
@@ -130,9 +141,13 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		1F2A3B4C5D6E7F50 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (1F2A3B4C5D6E7F31, 1F2A3B4C5D6E7F21, 1F2A3B4C5D6E7F11); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2C3D4E5F6A7B8C9D /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F6799, 0A1B2C3D4E5F67A1, 0A1B2C3D4E5F67A9, 0A1B2C3D4E5F67B1, 0A1B2C3D4E5F67B9, 0A1B2C3D4E5F67C1); runOnlyForDeploymentPostprocessing = 0; };
-		0A1B2C3D4E5F67E9 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F6789, 0A1B2C3D4E5F6791, 0A1B2C3D4E5F67D1); runOnlyForDeploymentPostprocessing = 0; };
+		0A1B2C3D4E5F67E9 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67D1); runOnlyForDeploymentPostprocessing = 0; };
 		6A7B8C9D0E1F2A3B /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67D9); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
@@ -225,24 +240,44 @@
 		9A8B7C6D5E4F3A2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				EXECUTABLE_PREFIX = "";
+				INFOPLIST_FILE = "Ghosted/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ghosted;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_LANGUAGE_MODES = "-swift6";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		9B8A7C6D5E4F3A30 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				EXECUTABLE_PREFIX = "";
+				INFOPLIST_FILE = "Ghosted/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Ghosted;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_LANGUAGE_MODES = "-swift6";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -252,10 +287,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = "Tests/GhostedTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_LANGUAGE_MODES = "-swift6";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted.app/Ghosted";
 			};
 			name = Debug;
 		};
@@ -265,10 +303,13 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = "Tests/GhostedTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
 				SWIFT_LANGUAGE_MODES = "-swift6";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted.app/Ghosted";
 			};
 			name = Release;
 		};
@@ -287,7 +328,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9C8D7E6F5A4B3C2D /* Build configuration list for PBXNativeTarget "Ghosted" */ = {
+		9C8D7E6F5A4B3C2D /* Build configuration list for PBXNativeTarget "GhostedApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (9A8B7C6D5E4F3A2F, 9B8A7C6D5E4F3A30);
 			defaultConfigurationIsVisible = 0;
