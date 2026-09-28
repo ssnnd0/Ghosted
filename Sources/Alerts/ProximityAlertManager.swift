@@ -1,9 +1,9 @@
 import AVFoundation
-import CoreLocation
+import GhostedCore
 import UIKit
 
 /// Fires once per camera as you enter its geofence ahead of you, then re-arms after you've moved clear.
-/// Feed it the position from `MovementController` (your source of truth), not from CLLocationManager.
+/// Feed it the position from `RouteStreamer` (your source of truth), not from CLLocationManager.
 @MainActor
 final class ProximityAlertManager {
     struct Alert {
@@ -11,7 +11,8 @@ final class ProximityAlertManager {
         let distance: Double
     }
 
-    var onAlert: ((Alert) -> Void)?
+    /// Main-actor isolated: `fire` runs on the main actor, and callers mutate UI from it.
+    var onAlert: (@MainActor (Alert) -> Void)?
     var speaks = true
 
     private let index: CameraQuadtree
@@ -24,7 +25,7 @@ final class ProximityAlertManager {
         self.radius = radius
     }
 
-    func update(position: CLLocationCoordinate2D, heading: Double?) {
+    func update(position: Coordinate, heading: Double?) {
         let nearby = index.query(near: position, radius: radius * 1.3)
         // Hysteresis: a camera stays suppressed until it falls outside 1.3× radius, so GPS wobble at the
         // boundary can't re-trigger it.

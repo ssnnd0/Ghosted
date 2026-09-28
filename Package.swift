@@ -4,6 +4,10 @@ import PackageDescription
 
 let package = Package(
     name: "Ghosted",
+    // iOS floor matches IPHONEOS_DEPLOYMENT_TARGET in Ghosted.xcodeproj (17.4, rounded
+    // down to SPM's major.minor granularity). macOS is listed because swift.yml runs
+    // `swift test` there; without a platforms clause SPM silently assumes macOS 10.13.
+    platforms: [.iOS(.v17), .macOS(.v13)],
     targets: [
         // Cross-platform library: geodesy, quadtree, route avoidance, movement simulation.
         // Compiles on macOS, Linux and Windows (no UIKit / AVFoundation / CoreLocation dependency).

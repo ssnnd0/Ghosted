@@ -42,7 +42,9 @@ final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate {
     }
 
     func stop() {
-        observers.forEach(NotificationCenter.default.removeObserver)
+        for observer in observers {
+            NotificationCenter.default.removeObserver(observer)
+        }
         observers.removeAll()
         player.stop()
         engine.stop()
@@ -81,6 +83,6 @@ final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate {
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // Intentionally empty. The app's own source of truth is MovementController, not CoreLocation.
+        // Intentionally empty. The app's own source of truth is RouteStreamer, not CoreLocation.
     }
 }

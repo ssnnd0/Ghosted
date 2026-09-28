@@ -7,7 +7,7 @@
 
         /* Begin PBXBuildFile section */
         0100000000000000 /* GhostedCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1100000000000000 /* GhostedCore.framework */; };
-        0200000000000000 /* App/GhostedApp.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1200000000000000 /* App/GhostedApp.swift */; };
+        0200000000000000 /* GhostedApp.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1200000000000000 /* GhostedApp.swift */; };
         0300000000000000 /* Ghosted/LaunchScreen.storyboard in Resources */ = { isa = PBXBuildFile; fileRef = 1300000000000000 /* Ghosted/LaunchScreen.storyboard */; };
         0500000000000000 /* Ghosted/Assets.xcassets in Resources */ = { isa = PBXBuildFile; fileRef = 1500000000000000 /* Ghosted/Assets.xcassets */; };
         0600000000000000 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1600000000000000 /* UIKit.framework */; };
@@ -18,6 +18,13 @@
         0B00000000000000 /* MovementSimulator.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1B00000000000000 /* MovementSimulator.swift */; };
         0C00000000000000 /* RouteExposureStatus.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1C00000000000000 /* RouteExposureStatus.swift */; };
         0D00000000000000 /* RuntimeContract.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1F00000000000000 /* RuntimeContract.swift */; };
+        0E00000000000000 /* GhostedCore.framework in Embed Frameworks */ = { isa = PBXBuildFile; fileRef = 1100000000000000 /* GhostedCore.framework */; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+        0F00000000000000 /* LocalSpoofingManager.swift in Sources */ = { isa = PBXBuildFile; fileRef = 2E00000000000000 /* LocalSpoofingManager.swift */; };
+        1E00000000000000 /* IdeviceBackend.swift in Sources */ = { isa = PBXBuildFile; fileRef = 2F00000000000000 /* IdeviceBackend.swift */; };
+        2A00000000000000 /* RouteStreamer.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3A00000000000000 /* RouteStreamer.swift */; };
+        2B00000000000000 /* BackgroundKeepAlive.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3600000000000000 /* BackgroundKeepAlive.swift */; };
+        2C00000000000000 /* ProximityAlertManager.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3700000000000000 /* ProximityAlertManager.swift */; };
+        2D00000000000000 /* SpoofingSession.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3800000000000000 /* SpoofingSession.swift */; };
         /* End PBXBuildFile section */
 
         /* Begin PBXFileReference section */
@@ -35,19 +42,38 @@
         1C00000000000000 /* RouteExposureStatus.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteExposureStatus.swift; sourceTree = "<group>"; };
         1D00000000000000 /* Ghosted.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghosted.app; sourceTree = BUILT_PRODUCTS_DIR; };
         1F00000000000000 /* RuntimeContract.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeContract.swift; sourceTree = "<group>"; };
+        2E00000000000000 /* LocalSpoofingManager.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSpoofingManager.swift; sourceTree = "<group>"; };
+        2F00000000000000 /* IdeviceBackend.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeviceBackend.swift; sourceTree = "<group>"; };
+        3600000000000000 /* BackgroundKeepAlive.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundKeepAlive.swift; sourceTree = "<group>"; };
+        3700000000000000 /* ProximityAlertManager.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityAlertManager.swift; sourceTree = "<group>"; };
+        3800000000000000 /* SpoofingSession.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoofingSession.swift; sourceTree = "<group>"; };
+        3A00000000000000 /* RouteStreamer.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStreamer.swift; sourceTree = "<group>"; };
         /* End PBXFileReference section */
 
+        /* Begin PBXCopyFilesBuildPhase section */
+        6300000000000000 /* Embed Frameworks */ = {
+            isa = PBXCopyFilesBuildPhase;
+            buildActionMask = 2147483647;
+            dstPath = "";
+            dstSubfolderSpec = 10;
+            files = (0E00000000000000);
+            name = "Embed Frameworks";
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        /* End PBXCopyFilesBuildPhase section */
+
         /* Begin PBXFrameworksBuildPhase section */
-        2100000000000000 /* Frameworks */ = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0100000000000000, 0600000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        2100000000000000 /* Frameworks */ = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         2200000000000000 /* Frameworks */ = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0100000000000000, 0600000000000000); runOnlyForDeploymentPostprocessing = 0; };
         /* End PBXFrameworksBuildPhase section */
 
         /* Begin PBXGroup section */
         3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
-        3100000000000000 /* AppGroup */ = { isa = PBXGroup; children = (1200000000000000); name = App; path = App; sourceTree = "<group>"; };
         3200000000000000 /* GhostedResources */ = { isa = PBXGroup; children = (1300000000000000, 1400000000000000, 1500000000000000); name = Ghosted; path = Ghosted; sourceTree = "<group>"; };
-        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3100000000000000, 3400000000000000, 3200000000000000); sourceTree = "<group>"; };
-        3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
+        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3400000000000000, 3900000000000000, 3B00000000000000, 3200000000000000); sourceTree = "<group>"; };
+        3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000, 1200000000000000, 3800000000000000, 3A00000000000000); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
+        3900000000000000 /* SpoofingGroup */ = { isa = PBXGroup; children = (2E00000000000000, 2F00000000000000, 3600000000000000); name = Spoofing; path = Sources/Spoofing; sourceTree = "<group>"; };
+        3B00000000000000 /* AlertsGroup */ = { isa = PBXGroup; children = (3700000000000000); name = Alerts; path = Sources/Alerts; sourceTree = "<group>"; };
         /* End PBXGroup section */
 
         /* Begin PBXNativeTarget section */
@@ -65,7 +91,7 @@
         4100000000000000 /* Ghosted */ = {
             isa = PBXNativeTarget;
             buildConfigurationList = 5100000000000000 /* Build configuration list for PBXNativeTarget "Ghosted" */;
-            buildPhases = ( 6100000000000000 /* Sources */, 6200000000000000 /* Resources */, 2200000000000000 /* Frameworks */ );
+            buildPhases = ( 6100000000000000 /* Sources */, 6200000000000000 /* Resources */, 2200000000000000 /* Frameworks */, 6300000000000000 /* Embed Frameworks */ );
             buildRules = ();
             dependencies = ( 7000000000000000 /* PBXTargetDependency */ );
             name = Ghosted;
@@ -105,7 +131,7 @@
 
         /* Begin PBXSourcesBuildPhase section */
         6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000); runOnlyForDeploymentPostprocessing = 0; };
-        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000, 0F00000000000000, 1E00000000000000, 2A00000000000000, 2B00000000000000, 2C00000000000000, 2D00000000000000); runOnlyForDeploymentPostprocessing = 0; };
         /* End PBXSourcesBuildPhase section */
 
         /* Begin PBXTargetDependency section */
@@ -128,6 +154,7 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_OPTIMIZATION_LEVEL = 0;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 17.4;
                 MTL_ENABLE_DEBUG_INFO = YES;
                 ONLY_ACTIVE_ARCH = YES;
                 SDKROOT = iphoneos;
@@ -149,6 +176,7 @@
                 GCC_NO_COMMON_BLOCKS = YES;
                 GCC_OPTIMIZATION_LEVEL = 3;
                 GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 17.4;
                 MTL_ENABLE_DEBUG_INFO = NO;
                 SDKROOT = iphoneos;
                 SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -205,7 +233,6 @@
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
                 INFOPLIST_FILE = Ghosted/Info.plist;
-                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
                 MARKETING_VERSION = 1.0;
                 PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
@@ -226,7 +253,6 @@
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
                 INFOPLIST_FILE = Ghosted/Info.plist;
-                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
                 MARKETING_VERSION = 1.0;
                 PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";

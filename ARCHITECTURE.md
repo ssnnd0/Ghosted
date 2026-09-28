@@ -22,23 +22,46 @@ Licensing: StikDebug is AGPL-3.0. Copying its code makes your app AGPL. Check th
 Ghosted/
 ├── ARCHITECTURE.md
 ├── Config/
-│   ├── Info.plist
-│   └── Ghosted.entitlements
+│   └── Ghosted.entitlements            intentionally empty — this design needs none
 ├── Sources/
+│   ├── GhostedCore/                    portable, Foundation-only, host-testable
+│   │   ├── GeoMath.swift                haversine, bearings, segment distance, RoutePath
+│   │   ├── CameraIndex.swift            CameraNode, quadtree, GeoJSON loader
+│   │   ├── AvoidanceRouter.swift        exposure analysis, detour search, Google Routes provider
+│   │   ├── MovementSimulator.swift      route driving simulation (clock-free, seedable)
+│   │   ├── RouteExposureStatus.swift    runtime risk summary
+│   │   └── Coordinate.swift             value-type coordinate
+│   ├── Ghosted/                        the app shell; single @main
+│   │   ├── GhostedApp.swift             UIKit entry point, shell UI, runtime contract
+│   │   ├── SpoofingSession.swift        composition root — the only place the pieces meet
+│   │   ├── RouteStreamer.swift          1 Hz clock around the portable MovementSimulator
+│   │   └── RuntimeContract.swift        on-screen runtime contract checklist
 │   ├── Spoofing/
 │   │   ├── LocalSpoofingManager.swift   state machine, recovery, pairing store
 │   │   ├── IdeviceBackend.swift         native adapter (skeleton — wire to idevice FFI)
-│   │   ├── MovementController.swift     polyline → 1 Hz stream, multiplier, stops, jitter
 │   │   └── BackgroundKeepAlive.swift    silent audio + background location
-│   ├── Routing/
-│   │   ├── GeoMath.swift                haversine, bearings, segment distance, RoutePath
-│   │   ├── CameraIndex.swift            CameraNode, quadtree, GeoJSON loader
-│   │   └── AvoidanceRouter.swift        exposure analysis, detour search, Google Routes provider
 │   └── Alerts/
 │       └── ProximityAlertManager.swift
-├── App/                                 not written: SwiftUI shell, GMSMapView wrapper, bottom sheet
-└── Resources/cameras.geojson            not included: your DeFlock/OSM export
+├── Ghosted/                            Info.plist, LaunchScreen.storyboard, Assets.xcassets
+└── Resources/cameras.geojson           not included: your DeFlock/OSM export
 ```
+
+Everything under `Sources/Spoofing`, `Sources/Alerts` and `Sources/Ghosted` is
+compiled by the **Xcode app target only**. They import UIKit/AVFoundation/CoreLocation
+and cannot join the portable `GhostedCore` target or the SwiftPM `Ghosted` target, so
+`swift test` does not type-check them.
+
+`Sources/Ghosted` is compiled by *both* the Xcode app target and the SwiftPM `Ghosted`
+target, so the two build systems share one `@main`.
+
+Two earlier locations were superseded and removed:
+
+- The routing logic lived in `Sources/Routing/`. It now lives in `Sources/GhostedCore/`
+  so it stays portable and unit-testable on non-iOS hosts.
+- The 1 Hz movement loop was a `Sources/Spoofing/MovementController` actor holding its
+  own copy of the physics plus private `MovementProfile` / `MovementUpdate` types that
+  shadowed the tested ones. `GhostedCore.MovementSimulator` is the same algorithm made
+  clock-free and seedable; `Sources/Ghosted/RouteStreamer.swift` now supplies the clock.
 
 ## One-time setup (needs a computer, once)
 

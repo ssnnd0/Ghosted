@@ -24,8 +24,10 @@ public struct RuntimeContractCheck: Identifiable, Sendable {
 }
 
 public enum RuntimeContractAudit {
-    public static func checklist() -> [RuntimeContractCheck] {
-        [
+    /// - Parameter overrides: check `id` → live status. Anything absent stays `.pending`,
+    ///   which is the honest default: a check the app cannot observe is not satisfied.
+    public static func checklist(overrides: [String: RuntimeContractStatus] = [:]) -> [RuntimeContractCheck] {
+        let checks: [RuntimeContractCheck] = [
             RuntimeContractCheck(
                 id: "ios-version",
                 title: "iOS 17.4+",
@@ -69,6 +71,13 @@ public enum RuntimeContractAudit {
                 detail: "This is the live device runtime contract that translates the simulated route into the system location service."
             ),
             RuntimeContractCheck(
+                id: "proximity-alerts",
+                title: "Camera index",
+                requirement: "Drop a cameras.geojson export into the app's Documents folder.",
+                status: .pending,
+                detail: "Without a camera index the proximity alerts are inert; the route stream itself still works."
+            ),
+            RuntimeContractCheck(
                 id: "background-mode",
                 title: "Background keep-alive",
                 requirement: "Leave silent-audio and location background modes enabled.",
@@ -76,10 +85,21 @@ public enum RuntimeContractAudit {
                 detail: "Background execution is required for a continuous 1 Hz spoofed GPS stream while the phone is locked."
             )
         ]
+
+        return checks.map { check in
+            guard let live = overrides[check.id], live != .pending else { return check }
+            return RuntimeContractCheck(
+                id: check.id,
+                title: check.title,
+                requirement: check.requirement,
+                status: live,
+                detail: check.detail
+            )
+        }
     }
 
-    public static func summary() -> String {
-        let checks = checklist()
+    public static func summary(overrides: [String: RuntimeContractStatus] = [:]) -> String {
+        let checks = checklist(overrides: overrides)
         let ready = checks.filter { $0.status == .ready }.count
         let blocked = checks.filter { $0.status == .blocked }.count
         if blocked > 0 {

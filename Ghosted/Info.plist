@@ -32,23 +32,28 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Ghosted needs access to your location for route simulation and camera awareness.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Ghosted needs continuous location access for background spoofing and route tracking.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Ghosted requires location access in the background.</string>
-	<key>UIDeviceFamily</key>
+	<!-- Both are required by BackgroundKeepAlive. Setting allowsBackgroundLocationUpdates
+	     without the `location` mode raises an ObjC exception and crashes the app. -->
+	<key>UIBackgroundModes</key>
 	<array>
-		<integer>1</integer>
+		<string>audio</string>
+		<string>location</string>
 	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Ghosted connects to this device's own developer services through the on-device loopback VPN.</string>
+	<!-- Pairing files, the DDI folder and cameras.geojson are all dropped into Documents. -->
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>

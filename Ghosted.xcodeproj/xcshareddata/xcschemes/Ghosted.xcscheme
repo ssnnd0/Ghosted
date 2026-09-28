@@ -27,17 +27,9 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <!-- No test bundle target exists in this project. The 52 GhostedCore tests live in
+           Tests/GhostedTests and run via `swift test`, not `xcodebuild test`. -->
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4000000000000000"
-               BuildableName = "GhostedCore.framework"
-               BlueprintName = "GhostedCore"
-               ReferencedContainer = "container:Ghosted.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

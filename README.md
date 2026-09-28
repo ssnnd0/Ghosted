@@ -6,18 +6,29 @@ Ghosted is a Swift package and iOS app shell for route-aware, camera-aware locat
 
 ## Project status
 
-- Core library: complete and tested
-- App shell: finished as a minimal iOS entry surface
-- Device runtime contract: implemented as a clean boundary, but final live validation must happen on a real iPhone
+This is an **unbuilt draft**. The Swift has never been compiled — see AUDIT.md.
+
+- Core library: written, with 52 unit tests in 10 suites. Never compiled or run.
+- App shell: every source file is now compiled by a target, and the spoofing stack is
+  composed rather than merely written. It is still not a working app.
+- Spoofing and alert layers: in the Xcode app target, iOS-only, and **covered by no
+  test or CI type-check** — only the iOS build compiles them.
+- Device runtime contract: not implemented in compiled code; live validation must
+  happen on a real iPhone. `IdeviceBackend` is a state skeleton with no FFI behind it,
+  so the session will reach "ready" and then push nothing.
 
 ## Architecture
 
 The repo is intentionally split:
 
 - **GhostedCore**: geodesy, route/path logic, quadtree camera indexing, route avoidance, movement simulation, route risk summary
-- **Ghosted app**: minimal iOS shell and runtime entry point
+- **Ghosted app**: UIKit shell, composition root, 1 Hz clock, runtime entry point
 - **Spoofing layer**: pairing, DDI management, route streaming, loopback reachability, heartbeat and recovery
 - **Alert layer**: proximity warning logic while a fake GPS stream is active
+
+`Sources/Spoofing/`, `Sources/Alerts/` and `Sources/Ghosted/` are compiled by the
+Xcode app target only — they import UIKit/AVFoundation/CoreLocation, so neither
+`GhostedCore` nor the SwiftPM `Ghosted` target can type-check them.
 
 ## Quick start
 
@@ -40,9 +51,13 @@ Use this on the actual device before claiming the spoofing flow works.
 4. Loopback VPN active and device connected to Wi‑Fi
 5. Matching DDI mounted for the installed iOS build
 6. CoreDevice/RSD location channel opened and heartbeat maintained
-7. Background audio + location modes enabled
+7. Background audio + location modes — **enabled** in `Ghosted/Info.plist` and armed
+   by `BackgroundKeepAlive` once the session is up
 8. Real route push validated while the screen is locked
 9. Route and camera logic confirmed against the actual device GPS stream
+
+Steps 1–6 are reachable from the app's **Start session** button, which names the
+blocking step instead of failing silently. Steps 7–9 need a real device.
 
 ## Device-runtime contract
 
@@ -57,24 +72,31 @@ The live runtime contract is defined by these requirements:
 
 ## Verification
 
-The project is kept green with Swift tests and the portable logic remains validation-ready on the host machine.
+The portable logic is intended to be verified on the host machine:
 
 ```bash
 swift test
 ```
 
-The current suite is passing with 52 tests in 10 suites and 0 failures.
+The suite contains 52 tests across 10 suites, all against `GhostedCore`. **No run has
+been recorded**, so no pass/fail result can be claimed here.
+`.github/workflows/swift.yml` runs `swift build` and `swift test` on macOS against
+every push — but the iOS-only app layer is in no SwiftPM target, so that job does not
+compile it.
 
 ## Files included
 
 - ARCHITECTURE.md
 - AUDIT.md
 - README.md
+- XCODE.md
 - LICENSE
-- App/
-- Config/
-- Sources/
-- Tests/
+- Ghosted.xcodeproj/     Xcode app + framework targets
+- Config/                an intentionally empty entitlements file
+- Ghosted/               Info.plist, storyboard, asset catalog
+- Sources/               GhostedCore (portable), Ghosted (app shell), Spoofing, Alerts
+- Tests/                 SwiftPM tests for GhostedCore
+- .github/workflows/     iOS IPA build + SwiftPM test run
 
 ## License
 

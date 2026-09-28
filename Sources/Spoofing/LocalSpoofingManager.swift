@@ -1,7 +1,7 @@
 import Foundation
 import Network
 import Security
-import CoreLocation
+import GhostedCore
 
 // MARK: - Errors
 
@@ -113,7 +113,7 @@ actor LocalSpoofingManager {
     private var heartbeat: Task<Void, Never>?
     private var pathMonitor: NWPathMonitor?
     private var recoveryTask: Task<Void, Error>?
-    private var lastPushed: CLLocationCoordinate2D?
+    private var lastPushed: Coordinate?
 
     init(backend: DeveloperServicesBackend, config: Config) {
         self.backend = backend
@@ -164,8 +164,8 @@ actor LocalSpoofingManager {
 
     // MARK: Pushing locations
 
-    /// Called once per tick by `MovementController`. One transparent recovery attempt per failure.
-    func setLocation(_ c: CLLocationCoordinate2D) async throws {
+    /// Called once per tick by `RouteStreamer`. One transparent recovery attempt per failure.
+    func setLocation(_ c: Coordinate) async throws {
         lastPushed = c
         do {
             try await backend.setLocation(lat: c.latitude, lon: c.longitude)
