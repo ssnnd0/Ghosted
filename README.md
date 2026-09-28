@@ -75,11 +75,6 @@ The current suite is passing with 52 tests in 10 suites and 0 failures.
 - Config/
 - Sources/
 - Tests/
-- Dolphin/
-
-## Dolphin companion files
-
-The Dolphin folder contains the runtime checklist and companion notes for the on-device validation pass.
 
 ## License
 
