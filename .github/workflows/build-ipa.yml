@@ -1,0 +1,128 @@
+name: Build iOS App (IPA)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        run: |
+          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+          xcode-select -p
+
+      - name: Install dependencies
+        run: |
+          if [ -f "Podfile" ]; then
+            pod install
+          fi
+
+      - name: Build for iOS
+        run: |
+          xcodebuild \
+            -scheme Ghosted \
+            -configuration Release \
+            -derivedDataPath build \
+            -arch arm64 \
+            build
+
+      - name: Create IPA
+        run: |
+          xcodebuild \
+            -scheme Ghosted \
+            -configuration Release \
+            -derivedDataPath build \
+            -arch arm64 \
+            -allowProvisioningUpdates \
+            -exportOptionsPlist ExportOptions.plist \
+            -exportPath build/ipa \
+            archive
+
+      - name: Verify IPA
+        run: |
+          ls -lh build/ipa/*.ipa || echo "IPA not found in expected location"
+
+      - name: Upload IPA as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Ghosted-IPA
+          path: build/ipa/*.ipa
+          retention-days: 30
+        if: success()
+
+      - name: Generate build summary
+        if: always()
+        run: |
+          echo "## iOS Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Scheme**: Ghosted" >> $GITHUB_STEP_SUMMARY
+          echo "- **Configuration**: Release" >> $GITHUB_STEP_SUMMARY
+          echo "- **Architecture**: arm64" >> $GITHUB_STEP_SUMMARY
+          echo "- **Build Date**: $(date)" >> $GITHUB_STEP_SUMMARY
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download IPA artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Ghosted-IPA
+          path: ./ipa
+
+      - name: Get version from tag or commit
+        id: version
+        run: |
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION="v$(date +%Y.%m.%d)-${GITHUB_SHA::7}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "VERSION=$VERSION"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./ipa/*.ipa
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Ghosted ${{ steps.version.outputs.version }}
+          body: |
+            ## Ghosted iOS Build
+
+            **Version**: ${{ steps.version.outputs.version }}
+            **Build Date**: ${{ github.event.head_commit.timestamp || 'N/A' }}
+            **Commit**: ${{ github.sha }}
+
+            ### Contents
+            - Ghosted.ipa - The compiled iOS application package
+
+            ### Installation
+            You can install this IPA on an authorized device using:
+            - Xcode and a connected device
+            - Apple Configurator 2
+            - Third-party tools like ios-app-installer
+
+            ### Legal Notice
+            Please review the LICENSE and README for important disclaimers and usage restrictions.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
