@@ -1,346 +1,263 @@
 // !$*UTF8*$!
 {
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 56;
-	objects = {
-/* Begin PBXBuildFile section */
-		0A1B2C3D4E5F6789 /* Ghosted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7E8F; };
-		0A1B2C3D4E5F6791 /* RuntimeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7EA1; };
-		0A1B2C3D4E5F6799 /* AvoidanceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7EB9; };
-		0A1B2C3D4E5F67A1 /* CameraIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7EC9; };
-		0A1B2C3D4E5F67A9 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7ED9; };
-		0A1B2C3D4E5F67B1 /* GeoMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7EE9; };
-		0A1B2C3D4E5F67B9 /* MovementSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7EF9; };
-		0A1B2C3D4E5F67C1 /* RouteExposureStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2F3A4B5C6D7F09; };
-		0A1B2C3D4E5F67C9 /* GhostedCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A4B5C6D7E8F9A; };
-		0A1B2C3D4E5F67D1 /* GhostedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4B5C6D7E8F9A0B; };
-		0A1B2C3D4E5F67D9 /* GhostedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B5C6D7E8F9A0B1C; };
-		0A1B2C3D4E5F67E1 /* GhostedCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A4B5C6D7E8F9A; };
-		1F2A3B4C5D6E7F11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F10; };
-		1F2A3B4C5D6E7F21 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F20; };
-		1F2A3B4C5D6E7F31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A3B4C5D6E7F30; };
-		2E3F4A5B6C7D8E9F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E3F4A5B6C7D8E9E; };
-/* End PBXBuildFile section */
+    archiveVersion = 1;
+    classes = {};
+    objectVersion = 56;
+    objects = {
 
-/* Begin PBXContainerItemProxy section */
-		0F1E2D3C4B5A6978 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7F6E5D4C3B2A1908;
-			proxyType = 1;
-			remoteGlobalIDString = 1F2A3B4C5D6E7F89;
-			remoteInfo = GhostedCore;
-		};
-		0F1E2D3C4B5A6980 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7F6E5D4C3B2A1908;
-			proxyType = 1;
-			remoteGlobalIDString = 2A3B4C5D6E7F8A9B;
-			remoteInfo = GhostedApp;
-		};
-/* End PBXContainerItemProxy section */
+        /* Begin PBXBuildFile section */
+        0100000000000000 /* GhostedCore.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1100000000000000 /* GhostedCore.framework */; };
+        0200000000000000 /* App/GhostedApp.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1200000000000000 /* App/GhostedApp.swift */; };
+        0300000000000000 /* Ghosted/LaunchScreen.storyboard in Resources */ = { isa = PBXBuildFile; fileRef = 1300000000000000 /* Ghosted/LaunchScreen.storyboard */; };
+        0400000000000000 /* Ghosted/Info.plist in Resources */ = { isa = PBXBuildFile; fileRef = 1400000000000000 /* Ghosted/Info.plist */; };
+        0500000000000000 /* Ghosted/Assets.xcassets in Resources */ = { isa = PBXBuildFile; fileRef = 1500000000000000 /* Ghosted/Assets.xcassets */; };
+        0600000000000000 /* UIKit.framework in Frameworks */ = { isa = PBXBuildFile; fileRef = 1600000000000000 /* UIKit.framework */; };
+        0700000000000000 /* AvoidanceRouter.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1700000000000000 /* AvoidanceRouter.swift */; };
+        0800000000000000 /* CameraIndex.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1800000000000000 /* CameraIndex.swift */; };
+        0900000000000000 /* Coordinate.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1900000000000000 /* Coordinate.swift */; };
+        0A00000000000000 /* GeoMath.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1A00000000000000 /* GeoMath.swift */; };
+        0B00000000000000 /* MovementSimulator.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1B00000000000000 /* MovementSimulator.swift */; };
+        0C00000000000000 /* RouteExposureStatus.swift in Sources */ = { isa = PBXBuildFile; fileRef = 1C00000000000000 /* RouteExposureStatus.swift */; };
+        /* End PBXBuildFile section */
 
-/* Begin PBXFileReference section */
-		1E2F3A4B5C6D7E8F /* Ghosted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/Ghosted/Ghosted.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7EA1 /* RuntimeContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/Ghosted/RuntimeContract.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7EB9 /* AvoidanceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/AvoidanceRouter.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7EC9 /* CameraIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/CameraIndex.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7ED9 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/Coordinate.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7EE9 /* GeoMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/GeoMath.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7EF9 /* MovementSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/MovementSimulator.swift"; sourceTree = "<group>"; };
-		1E2F3A4B5C6D7F09 /* RouteExposureStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/RouteExposureStatus.swift"; sourceTree = "<group>"; };
-		1F2A3B4C5D6E7F10 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Ghosted/LaunchScreen.storyboard"; sourceTree = "<group>"; };
-		1F2A3B4C5D6E7F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ghosted/Info.plist"; sourceTree = "<group>"; };
-		1F2A3B4C5D6E7F30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Ghosted/Assets.xcassets"; sourceTree = "<group>"; };
-		2E3F4A5B6C7D8E9E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2F3A4B5C6D7E8F9A /* GhostedCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Build/GhostedCore.framework"; sourceTree = "<group>"; };
-		3A4B5C6D7E8F9A0B /* GhostedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/GhostedApp.swift"; sourceTree = "<group>"; };
-		4B5C6D7E8F9A0B1C /* GhostedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tests/GhostedTests/GhostedTests.swift"; sourceTree = "<group>"; };
-		5D4C3B2A1908F7A6 /* Ghosted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ghosted.app"; sourceTree = "BUILT_PRODUCTS_DIR"; };
-		6B7C8D9E0F1A2B3C /* GhostedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GhostedTests.xctest"; sourceTree = "BUILT_PRODUCTS_DIR"; };
-		7A8B9CA0B1C2D3E4 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Package.swift"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+        /* Begin PBXFileReference section */
+        1100000000000000 /* GhostedCore.framework */ = { isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GhostedCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+        1200000000000000 /* App/GhostedApp.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/GhostedApp.swift; sourceTree = "<group>"; };
+        1300000000000000 /* Ghosted/LaunchScreen.storyboard */ = { isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+        1400000000000000 /* Ghosted/Info.plist */ = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        1500000000000000 /* Ghosted/Assets.xcassets */ = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        1600000000000000 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+        1700000000000000 /* AvoidanceRouter.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/AvoidanceRouter.swift"; sourceTree = "<group>"; };
+        1800000000000000 /* CameraIndex.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/CameraIndex.swift"; sourceTree = "<group>"; };
+        1900000000000000 /* Coordinate.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/Coordinate.swift"; sourceTree = "<group>"; };
+        1A00000000000000 /* GeoMath.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/GeoMath.swift"; sourceTree = "<group>"; };
+        1B00000000000000 /* MovementSimulator.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/MovementSimulator.swift"; sourceTree = "<group>"; };
+        1C00000000000000 /* RouteExposureStatus.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sources/GhostedCore/RouteExposureStatus.swift"; sourceTree = "<group>"; };
+        1D00000000000000 /* Ghosted.app */ = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ghosted.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		1A2B3C4D5E6F7A8B /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67C9); runOnlyForDeploymentPostprocessing = 0; };
-		2B3C4D5E6F7A8B9C /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67E1); runOnlyForDeploymentPostprocessing = 0; };
-		2C3D4E5F6A7B8C0D /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (2E3F4A5B6C7D8E9F, 0A1B2C3D4E5F67C9); runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXFrameworksBuildPhase section */
+        /* Begin PBXFrameworksBuildPhase section */
+        2100000000000000 /* Frameworks */ = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0100000000000000, 0600000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        2200000000000000 /* Frameworks */ = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (0100000000000000, 0600000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXGroup section */
-		0A1B2C3D4E5F6700 /* Products */ = {isa = PBXGroup; children = (2F3A4B5C6D7E8F9A, 5D4C3B2A1908F7A6, 6B7C8D9E0F1A2B3C); name = Products; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6708 /* Sources */ = {isa = PBXGroup; children = (0A1B2C3D4E5F6710, 0A1B2C3D4E5F6720); name = Sources; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6710 /* GhostedCore */ = {isa = PBXGroup; children = (1E2F3A4B5C6D7EB9, 1E2F3A4B5C6D7EC9, 1E2F3A4B5C6D7ED9, 1E2F3A4B5C6D7EE9, 1E2F3A4B5C6D7EF9, 1E2F3A4B5C6D7F09); name = GhostedCore; path = "Sources/GhostedCore"; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6720 /* Ghosted Executable */ = {isa = PBXGroup; children = (1E2F3A4B5C6D7E8F, 1E2F3A4B5C6D7EA1); name = "Ghosted Executable"; path = "Sources/Ghosted"; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6738 /* Tests */ = {isa = PBXGroup; children = (4B5C6D7E8F9A0B1C); name = Tests; sourceTree = "<group>"; };
-		0A1B2C3D4E5F6750 /* Frameworks */ = {isa = PBXGroup; children = (2E3F4A5B6C7D8E9E); name = Frameworks; sourceTree = "<group>"; };
-		1F2A3B4C5D6E7F40 /* App */ = {isa = PBXGroup; children = (3A4B5C6D7E8F9A0B, 1F2A3B4C5D6E7F10, 1F2A3B4C5D6E7F20, 1F2A3B4C5D6E7F30); name = App; path = Ghosted; sourceTree = "<group>"; };
-		3B5C6D7E8F9A0B1C /* Root */ = {isa = PBXGroup; children = (7A8B9CA0B1C2D3E4, 0A1B2C3D4E5F6708, 1F2A3B4C5D6E7F40, 0A1B2C3D4E5F6738, 0A1B2C3D4E5F6750, 0A1B2C3D4E5F6700); name = Root; sourceTree = "<group>"; };
-/* End PBXGroup section */
+        /* Begin PBXGroup section */
+        3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
+        3100000000000000 /* AppGroup */ = { isa = PBXGroup; children = (1200000000000000); name = App; path = App; sourceTree = "<group>"; };
+        3200000000000000 /* GhostedResources */ = { isa = PBXGroup; children = (1300000000000000, 1400000000000000, 1500000000000000); name = Ghosted; path = Ghosted; sourceTree = "<group>"; };
+        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3100000000000000, 3200000000000000); sourceTree = "<group>"; };
+        /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
-		1F2A3B4C5D6E7F89 /* GhostedCore */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8E7D6C5B4A392817;
-			buildPhases = (2C3D4E5F6A7B8C9D, 3D4E5F6A7B8C9DA, 4E5F6A7B8C9D0E);
-			buildRules = ();
-			dependencies = ();
-			name = GhostedCore;
-			productName = GhostedCore;
-			productReference = 2F3A4B5C6D7E8F9A;
-			productType = "com.apple.product-type.framework";
-		};
-		2A3B4C5D6E7F8A9B /* GhostedApp */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9C8D7E6F5A4B3C2D;
-			buildPhases = (2C3D4E5F6A7B8C0D, 0A1B2C3D4E5F67E9, 1A2B3C4D5E6F7A8B, 5F6A7B8C9D0E1F2A, 1F2A3B4C5D6E7F50);
-			buildRules = ();
-			dependencies = (0F1E2D3C4B5A6978);
-			name = GhostedApp;
-			productName = Ghosted;
-			productReference = 5D4C3B2A1908F7A6;
-			productType = "com.apple.product-type.application";
-		};
-		3B4C5D6E7F8A9B0C /* GhostedTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9D9E8F7A6B5C4D3E;
-			buildPhases = (6A7B8C9D0E1F2A3B, 2B3C4D5E6F7A8B9C, 7B8C9D0E1F2A3B4C);
-			buildRules = ();
-			dependencies = (0F1E2D3C4B5A6980);
-			name = GhostedTests;
-			productName = GhostedTests;
-			productReference = 6B7C8D9E0F1A2B3C;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-/* End PBXNativeTarget section */
+        /* Begin PBXNativeTarget section */
+        4000000000000000 /* GhostedCore */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 5000000000000000 /* Build configuration list for PBXNativeTarget "GhostedCore" */;
+            buildPhases = ( 6000000000000000 /* Sources */, 2100000000000000 /* Frameworks */ );
+            buildRules = ();
+            dependencies = ();
+            name = GhostedCore;
+            productName = GhostedCore;
+            productReference = 1100000000000000 /* GhostedCore.framework */;
+            productType = "com.apple.product-type.framework";
+        };
+        4100000000000000 /* Ghosted */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 5100000000000000 /* Build configuration list for PBXNativeTarget "Ghosted" */;
+            buildPhases = ( 6100000000000000 /* Sources */, 6200000000000000 /* Resources */, 2200000000000000 /* Frameworks */ );
+            buildRules = ();
+            dependencies = ( 7000000000000000 /* PBXTargetDependency */ );
+            name = Ghosted;
+            productName = Ghosted;
+            productReference = 1D00000000000000 /* Ghosted.app */;
+            productType = "com.apple.product-type.application";
+        };
+        /* End PBXNativeTarget section */
 
-/* Begin PBXProject section */
-		7F6E5D4C3B2A1908 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = 1;
-				LastSwiftMigration = 9999;
-				LastUpgradeCheck = 1520;
-				TargetAttributes = {
-					1F2A3B4C5D6E7F89 = {CreatedOnToolsVersion = 15.0; };
-					2A3B4C5D6E7F8A9B = {CreatedOnToolsVersion = 15.0; DevelopmentTeam = ""; ProvisioningStyle = Automatic; };
-					3B4C5D6E7F8A9B0C = {CreatedOnToolsVersion = 15.0; };
-				};
-			};
-			buildConfigurationList = 8E7D6C5B4A39281F;
-			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
-			hasScannedForEncodings = 0;
-			knownRegions = (en, Base);
-			mainGroup = 3B5C6D7E8F9A0B1C;
-			productRefGroup = 0A1B2C3D4E5F6700;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (1F2A3B4C5D6E7F89, 2A3B4C5D6E7F8A9B, 3B4C5D6E7F8A9B0C);
-		};
-/* End PBXProject section */
+        /* Begin PBXProject section */
+        8000000000000000 /* Project object */ = {
+            isa = PBXProject;
+            attributes = {
+                LastSwiftMigration = 9999;
+                LastUpgradeCheck = 1520;
+                TargetAttributes = {
+                    4100000000000000 = { CreatedOnToolsVersion = 15.0; };
+                    4000000000000000 = { CreatedOnToolsVersion = 15.0; };
+                };
+            };
+            buildConfigurationList = 5200000000000000 /* Build configuration list for PBXProject "Ghosted" */;
+            compatibilityVersion = "Xcode 14.0";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (en, Base);
+            mainGroup = 3300000000000000 /* Root */;
+            productRefGroup = 3300000000000000 /* Root */;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (4000000000000000, 4100000000000000);
+        };
+        /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		1F2A3B4C5D6E7F50 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (1F2A3B4C5D6E7F31, 1F2A3B4C5D6E7F21, 1F2A3B4C5D6E7F11); runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXResourcesBuildPhase section */
+        /* Begin PBXResourcesBuildPhase section */
+        6200000000000000 /* Resources */ = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (0300000000000000, 0400000000000000, 0500000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXSourcesBuildPhase section */
-		2C3D4E5F6A7B8C9D /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F6799, 0A1B2C3D4E5F67A1, 0A1B2C3D4E5F67A9, 0A1B2C3D4E5F67B1, 0A1B2C3D4E5F67B9, 0A1B2C3D4E5F67C1); runOnlyForDeploymentPostprocessing = 0; };
-		0A1B2C3D4E5F67E9 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67D1); runOnlyForDeploymentPostprocessing = 0; };
-		6A7B8C9D0E1F2A3B /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0A1B2C3D4E5F67D9); runOnlyForDeploymentPostprocessing = 0; };
-/* End PBXSourcesBuildPhase section */
+        /* Begin PBXSourcesBuildPhase section */
+        6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        /* End PBXSourcesBuildPhase section */
 
-/* Begin XCBuildConfiguration section */
-		9A8B7C6D5E4F3A2B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_DIALECT = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
-			};
-			name = Debug;
-		};
-		9B8A7C6D5E4F3A2C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_DIALECT = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 6.0;
-			};
-			name = Release;
-		};
-		9A8B7C6D5E4F3A2D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		9B8A7C6D5E4F3A2E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
-		9A8B7C6D5E4F3A2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				EXECUTABLE_PREFIX = "";
-				INFOPLIST_FILE = "Ghosted/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
-				PRODUCT_NAME = Ghosted;
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		9B8A7C6D5E4F3A30 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				EXECUTABLE_PREFIX = "";
-				INFOPLIST_FILE = "Ghosted/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
-				PRODUCT_NAME = Ghosted;
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		9A8B7C6D5E4F3A31 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "Tests/GhostedTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted.app/Ghosted";
-			};
-			name = Debug;
-		};
-		9B8A7C6D5E4F3A32 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "Tests/GhostedTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SWIFT_LANGUAGE_MODES = "-swift6";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ghosted.app/Ghosted";
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
+        /* Begin PBXTargetDependency section */
+        7000000000000000 /* PBXTargetDependency */ = { isa = PBXTargetDependency; target = 4000000000000000 /* GhostedCore */; targetProxy = 7100000000000000 /* PBXContainerItemProxy */; };
+        7100000000000000 /* PBXContainerItemProxy */ = { isa = PBXContainerItemProxy; containerPortal = 8000000000000000 /* Project object */; proxyType = 1; remoteGlobalIDString = 1100000000000000; remoteInfo = GhostedCore; };
+        /* End PBXTargetDependency section */
 
-/* Begin XCConfigurationList section */
-		8E7D6C5B4A39281F /* Build configuration list for PBXProject "Ghosted" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (9A8B7C6D5E4F3A2B, 9B8A7C6D5E4F3A2C);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8E7D6C5B4A392817 /* Build configuration list for PBXNativeTarget "GhostedCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (9A8B7C6D5E4F3A2D, 9B8A7C6D5E4F3A2E);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9C8D7E6F5A4B3C2D /* Build configuration list for PBXNativeTarget "GhostedApp" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (9A8B7C6D5E4F3A2F, 9B8A7C6D5E4F3A30);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9D9E8F7A6B5C4D3E /* Build configuration list for PBXNativeTarget "GhostedTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (9A8B7C6D5E4F3A31, 9B8A7C6D5E4F3A32);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = 7F6E5D4C3B2A1908 /* Project object */;
+        /* Begin XCBuildConfiguration section */
+        9000000000000000 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                COPY_PHASE_STRIP = NO;
+                DEBUG_INFORMATION_FORMAT = dwarf;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                GCC_C_LANGUAGE_DIALECT = gnu11;
+                GCC_DYNAMIC_NO_PIC = NO;
+                GCC_NO_COMMON_BLOCKS = YES;
+                GCC_OPTIMIZATION_LEVEL = 0;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                MTL_ENABLE_DEBUG_INFO = YES;
+                ONLY_ACTIVE_ARCH = YES;
+                SDKROOT = iphoneos;
+                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+                SWIFT_VERSION = 5.9;
+            };
+            name = Debug;
+        };
+        9100000000000000 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                COPY_PHASE_STRIP = YES;
+                DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                GCC_C_LANGUAGE_DIALECT = gnu11;
+                GCC_NO_COMMON_BLOCKS = YES;
+                GCC_OPTIMIZATION_LEVEL = 3;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                MTL_ENABLE_DEBUG_INFO = NO;
+                SDKROOT = iphoneos;
+                SWIFT_OPTIMIZATION_LEVEL = "-O";
+                SWIFT_VERSION = 5.9;
+            };
+            name = Release;
+        };
+        9200000000000000 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+                CURRENT_PROJECT_VERSION = 1;
+                DEFINES_MODULE = YES;
+                DYLIB_COMPATIBILITY_VERSION = 1;
+                DYLIB_CURRENT_VERSION = 1;
+                DYLIB_INSTALL_NAME_BASE = "@rpath";
+                INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
+                PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+                SKIP_INSTALL = YES;
+                SWIFT_LANGUAGE_MODE = "Swift";
+                VERSIONING_SYSTEM = "apple-generic";
+            };
+            name = Debug;
+        };
+        9300000000000000 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+                CURRENT_PROJECT_VERSION = 1;
+                DEFINES_MODULE = YES;
+                DYLIB_COMPATIBILITY_VERSION = 1;
+                DYLIB_CURRENT_VERSION = 1;
+                DYLIB_INSTALL_NAME_BASE = "@rpath";
+                INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
+                PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+                SKIP_INSTALL = YES;
+                SWIFT_LANGUAGE_MODE = "Swift";
+                VERSIONING_SYSTEM = "apple-generic";
+            };
+            name = Release;
+        };
+        9400000000000000 /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 1;
+                DEVELOPMENT_TEAM = "";
+                INFOPLIST_FILE = Ghosted/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
+                PRODUCT_NAME = Ghosted;
+                SDKROOT = iphoneos;
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.9;
+                TARGETED_DEVICE_FAMILY = 1;
+            };
+            name = Debug;
+        };
+        9500000000000000 /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+                CODE_SIGN_STYLE = Automatic;
+                CURRENT_PROJECT_VERSION = 1;
+                DEVELOPMENT_TEAM = "";
+                INFOPLIST_FILE = Ghosted/Info.plist;
+                IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+                MARKETING_VERSION = 1.0;
+                PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.Ghosted";
+                PRODUCT_NAME = Ghosted;
+                SDKROOT = iphoneos;
+                SWIFT_EMIT_LOC_STRINGS = YES;
+                SWIFT_VERSION = 5.9;
+                TARGETED_DEVICE_FAMILY = 1;
+            };
+            name = Release;
+        };
+        /* End XCBuildConfiguration section */
+
+        /* Begin XCConfigurationList section */
+        5000000000000000 /* Build configuration list for PBXNativeTarget "GhostedCore" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (9200000000000000, 9300000000000000);
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        5100000000000000 /* Build configuration list for PBXNativeTarget "Ghosted" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (9400000000000000, 9500000000000000);
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        5200000000000000 /* Build configuration list for PBXProject "Ghosted" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (9000000000000000, 9100000000000000);
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        /* End XCConfigurationList section */
+    };
+    rootObject = 8000000000000000 /* Project object */;
 }
