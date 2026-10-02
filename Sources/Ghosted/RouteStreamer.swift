@@ -1,3 +1,9 @@
+// 1 Hz driver for the portable `MovementSimulator`. iOS-only.
+//
+// This file sits inside the SwiftPM `Ghosted` target's path, so it must compile on
+// macOS as well — hence the guard. The Xcode app target compiles it for real.
+
+#if os(iOS)
 import Foundation
 import GhostedCore
 
@@ -70,3 +76,4 @@ final class RouteStreamer {
         task = nil
     }
 }
+#endif

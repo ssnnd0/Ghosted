@@ -38,8 +38,11 @@ were a pre-refactor set written against `CLLocationCoordinate2D`. They were
 referenced by no build target, package, or workflow, and have been deleted.
 
 ### App boundary — [D] clean, now single-sourced
-- `Sources/Ghosted/GhostedApp.swift` is the one and only `@main`. Both the Xcode app
-  target and the `Ghosted` SwiftPM executable target compile this same file.
+- `Sources/Ghosted/GhostedApp.swift` is the one and only entry point, and it is the
+  only file both the Xcode app target and the `Ghosted` SwiftPM executable target
+  compile. On iOS the entry point is `@main` on `AppDelegate`; on the host it is a
+  `@main` stub struct. The hand-rolled `UIApplicationMain` wrapper it replaced needed
+  `CommandLine.unsafeArgv`, which is internal to the stdlib overlay.
 - `Sources/Ghosted/RuntimeContract.swift` backs the on-screen contract checklist. It
   now takes live status overrides instead of hardcoding every row to `.pending`.
 - `Sources/Ghosted/SpoofingSession.swift` is the composition root.
@@ -106,6 +109,15 @@ and sit outside every SwiftPM target. `swift test` does not compile them, and
 **Closed this pass:** spoofing/alert layers in no target; missing `UIBackgroundModes`;
 the duplicate `Config/Info.plist`; the superseded `MovementController` duplicate; the
 invalid-capture-list and `let`-outside-`init` errors in the new composition code.
+
+**One trap worth knowing:** `Sources/Ghosted` is simultaneously the Xcode app target's
+source root *and* the SwiftPM `Ghosted` target's `path`. A new file dropped there is
+compiled by both. `SpoofingSession.swift` and `RouteStreamer.swift` initially were not
+guarded, so `swift build` on macOS would have failed to resolve
+`LocalSpoofingManager` / `IdeviceBackend` / `BackgroundKeepAlive` /
+`ProximityAlertManager` — classes that exist only in the Xcode target. The iOS build
+did not catch this, because Xcode has all of it in one target. Both files are now
+`#if os(iOS)`.
 
 ## Risk assessment
 - Program structure: **[D]** coherent; the core/app split is real and enforced by the target graph.

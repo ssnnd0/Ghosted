@@ -8,18 +8,6 @@ import Foundation
 import UIKit
 import GhostedCore
 
-@main
-struct GhostedApp {
-    static func main() {
-        UIApplicationMain(
-            CommandLine.argc,
-            CommandLine.unsafeArgV,
-            nil,
-            NSStringFromClass(AppDelegate.self)
-        )
-    }
-}
-
 final class MapShellViewController: UIViewController {
     private let statusLabel = UILabel()
     private let mapPlaceholder = UIView()
@@ -136,7 +124,7 @@ final class MapShellViewController: UIViewController {
         session.onPhaseChange = { [weak self] phase in
             guard let self else { return }
             self.statusLabel.text = "Ghosted\n\(phase.message)"
-            self.startButton.isEnabled = session.canStart
+            self.startButton.isEnabled = self.session.canStart
             self.stopButton.isEnabled = (phase == .ready)
             self.refreshContract()
         }
@@ -187,6 +175,11 @@ final class MapShellViewController: UIViewController {
     }
 }
 
+/// `@main` on the app delegate is the modern replacement for `@UIApplicationMain`
+/// (SE-0383) — it synthesises the `UIApplicationMain` call. The hand-rolled version
+/// needed `CommandLine.unsafeArgv`, which is internal to the stdlib overlay and is
+/// therefore not accessible from app code.
+@main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 

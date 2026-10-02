@@ -16,8 +16,14 @@ let package = Package(
             path: "Sources/GhostedCore"
         ),
 
-        // iOS-only executable: spoofing manager, background keep-alive, proximity alerts, app entry.
-        // This target won't compile on Windows; that's expected — build GhostedCore + tests there.
+        // Executable that keeps the app's `@main` and runtime contract in one place,
+        // compiled off-iOS too (each file guards itself with `#if os(iOS)`).
+        //
+        // This target does NOT contain the spoofing/alert code. That lives in
+        // `Sources/Spoofing/` and `Sources/Alerts/`, which are iOS-only by their
+        // imports and belong to the Xcode app target alone — see AUDIT.md defect #2.
+        // This target won't compile on Windows; that's expected — build GhostedCore
+        // + tests there.
         .executableTarget(
             name: "Ghosted",
             dependencies: ["GhostedCore"],

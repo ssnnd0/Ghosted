@@ -31,7 +31,7 @@ Ghosted/
 │   │   ├── MovementSimulator.swift      route driving simulation (clock-free, seedable)
 │   │   ├── RouteExposureStatus.swift    runtime risk summary
 │   │   └── Coordinate.swift             value-type coordinate
-│   ├── Ghosted/                        the app shell; single @main
+│   ├── Ghosted/                        the app shell; the single entry point
 │   │   ├── GhostedApp.swift             UIKit entry point, shell UI, runtime contract
 │   │   ├── SpoofingSession.swift        composition root — the only place the pieces meet
 │   │   ├── RouteStreamer.swift          1 Hz clock around the portable MovementSimulator
@@ -46,13 +46,20 @@ Ghosted/
 └── Resources/cameras.geojson           not included: your DeFlock/OSM export
 ```
 
-Everything under `Sources/Spoofing`, `Sources/Alerts` and `Sources/Ghosted` is
-compiled by the **Xcode app target only**. They import UIKit/AVFoundation/CoreLocation
-and cannot join the portable `GhostedCore` target or the SwiftPM `Ghosted` target, so
-`swift test` does not type-check them.
+Everything under `Sources/Spoofing` and `Sources/Alerts` is compiled by the **Xcode app
+target only**. Those files import UIKit/AVFoundation/CoreLocation/Network/Security, so
+they are iOS-only by construction and belong to neither the portable `GhostedCore`
+target nor the SwiftPM `Ghosted` target. `swift test` does not type-check them.
 
 `Sources/Ghosted` is compiled by *both* the Xcode app target and the SwiftPM `Ghosted`
-target, so the two build systems share one `@main`.
+target, so the two build systems share one entry point. Because the SwiftPM target also
+builds for macOS, every iOS-only file there wraps itself in `#if os(iOS)`:
+`GhostedApp.swift` has a host stub, and `SpoofingSession.swift` / `RouteStreamer.swift`
+resolve to nothing off-iOS. Adding a new file to `Sources/Ghosted` without that guard
+will break `swift build`, because its dependencies live in targets SwiftPM cannot see.
+
+On iOS the entry point is `@main` on `AppDelegate`; off-iOS it is a `@main` stub
+struct. The same file, one logical entry point per platform.
 
 Two earlier locations were superseded and removed:
 
