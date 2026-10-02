@@ -24,7 +24,7 @@
         2A00000000000000 /* RouteStreamer.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3A00000000000000 /* RouteStreamer.swift */; };
         2B00000000000000 /* BackgroundKeepAlive.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3600000000000000 /* BackgroundKeepAlive.swift */; };
         2C00000000000000 /* ProximityAlertManager.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3700000000000000 /* ProximityAlertManager.swift */; };
-        2D00000000000000 /* SpoofingSession.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3800000000000000 /* SpoofingSession.swift */ };
+        2D00000000000000 /* SpoofingSession.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3800000000000000 /* SpoofingSession.swift */; };
         2F00000000000003 /* RouteProviders.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000001 /* RouteProviders.swift */; };
         2F00000000000001 /* RoutePlanner.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000002 /* RoutePlanner.swift */; };
         2F00000000000002 /* URLSessionTransport.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000003 /* URLSessionTransport.swift */; };
