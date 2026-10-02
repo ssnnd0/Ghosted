@@ -1,5 +1,9 @@
 import Foundation
-import Network
+// `NWConnection` is captured by `stateUpdateHandler` and by the timeout block in `probeLoopback`.
+// Both closures are `@Sendable`, and Network.framework does not vended `NWConnection` as `Sendable`,
+// so Swift 6 rejects the capture. `@preconcurrency` downgrades just that diagnostic: `NWConnection`
+// really is documented as safe to `start`/`cancel` from any thread, which is all this file does.
+@preconcurrency import Network
 import Security
 import GhostedCore
 
@@ -34,7 +38,10 @@ enum SpoofError: Error, LocalizedError, Equatable {
             return "Developer Disk Image failed to mount: \(why). Import a DDI folder matching this iOS version " +
                    "(BuildManifest.plist + Image.dmg + Image.dmg.trustcache). If an image is already mounted, reboot first."
         case .tunnelDropped(let why): return "Developer tunnel dropped: \(why)"
-        case .backendNotLinked: return "The idevice backend isn't linked yet (see IdeviceBackend.swift)."
+        case .backendNotLinked:
+            return "No native device backend is linked into this build, so nothing has been pushed to the "
+                 + "device. This is expected: the libimobiledevice bridge is behind the IDEVICE_FFI_ENABLED "
+                 + "flag and is off by default. See Sources/IdeviceFFI/ and XCODE.md."
         }
     }
 }
@@ -300,8 +307,15 @@ actor LocalSpoofingManager {
 private final class Once: @unchecked Sendable {
     private let lock = NSLock()
     private var fired = false
+
+    /// `body` runs *outside* the lock. It resumes a `CheckedContinuation`, and the resumed task
+    /// can run on this very thread — if the lock were still held, a re-entrant call would
+    /// self-deadlock on this non-recursive lock.
     func run(_ body: () -> Void) {
-        lock.lock(); defer { lock.unlock() }
-        if !fired { fired = true; body() }
+        lock.lock()
+        let alreadyFired = fired
+        fired = true
+        lock.unlock()
+        if !alreadyFired { body() }
     }
 }

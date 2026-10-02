@@ -90,6 +90,31 @@ public final class CameraQuadtree: @unchecked Sendable {
         return out
     }
 
+    /// Every camera in the index, in unspecified order.
+    ///
+    /// Walked by walking the leaves, so this is O(count) and allocates the whole index — fine
+    /// for a browser list or a map render, and deliberately *not* how the routing path reads
+    /// the index (that queries a rect or a radius and never materialises everything).
+    public func allCameras() -> [CameraNode] {
+        var out: [CameraNode] = []
+        out.reserveCapacity(count)
+        collect(into: &out, root)
+        return out
+    }
+
+    /// The bounding box of everything inserted, or `nil` for an empty index.
+    /// Used to frame the map on the camera data when no route is streaming.
+    public var bounds: GeoRect? {
+        guard count > 0 else { return nil }
+        var r = GeoRect(minLat: .greatestFiniteMagnitude, maxLat: -.greatestFiniteMagnitude,
+                        minLon: .greatestFiniteMagnitude, maxLon: -.greatestFiniteMagnitude)
+        allCameras().forEach { c in
+            r.minLat = min(r.minLat, c.latitude); r.maxLat = max(r.maxLat, c.latitude)
+            r.minLon = min(r.minLon, c.longitude); r.maxLon = max(r.maxLon, c.longitude)
+        }
+        return r
+    }
+
     // MARK: - Internals
 
     private func childIndex(_ node: Node, _ cam: CameraNode) -> Int {
@@ -121,6 +146,14 @@ public final class CameraQuadtree: @unchecked Sendable {
         let moved = node.items
         node.items = []
         for cam in moved { insert(cam, into: node.children[childIndex(node, cam)]) }
+    }
+
+    private func collect(into out: inout [CameraNode], _ node: Node) {
+        if node.isLeaf {
+            out.append(contentsOf: node.items)
+        } else {
+            for child in node.children { collect(into: &out, child) }
+        }
     }
 
     private func query(_ rect: GeoRect, _ node: Node, _ visit: (CameraNode) -> Void) {

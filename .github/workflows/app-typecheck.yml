@@ -1,0 +1,82 @@
+# Type-checks the iOS-only app layer (Sources/Spoofing, Sources/Alerts, the `#if os(iOS)` branch
+# of Sources/Ghosted). Those files belong to the Xcode app target alone and are invisible to
+# `swift build`, so without this job nothing but build-ipa.yml would ever compile them.
+#
+# Runs on Linux with a pinned toolchain rather than macos-latest: the check needs no Apple SDK, and
+# pinning Swift explicitly keeps this job independent of the runner image's Xcode version. The
+# version below must stay >= the `swift-tools-version` in Package.swift.
+
+name: App Type-Check
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Swift 6.3
+      run: |
+        curl -fsSL -o /tmp/swift.tar.gz \
+          https://download.swift.org/swift-6.3-release/ubuntu2404/swift-6.3-RELEASE/swift-6.3-RELEASE-ubuntu24.04.tar.gz
+        mkdir -p /tmp/swift
+        tar xzf /tmp/swift.tar.gz -C /tmp/swift --strip-components=1
+        echo "/tmp/swift/usr/bin" >> "$GITHUB_PATH"
+
+    - name: Type-check app layer (Swift 6)
+      run: Tools/IOSTypeCheck/check.sh 6
+
+    - name: Type-check app layer (Swift 5 regression)
+      run: Tools/IOSTypeCheck/check.sh 5
+
+    - name: Confirm the type-check harness still fails on a real error
+      # A harness that has been broken into passing vacuously is worse than no harness: it would
+      # report green forever. Injects a type error and asserts the check fails, so a future edit
+      # that makes check.sh a no-op is caught here instead of by a broken build.
+      run: |
+        cp Sources/Spoofing/URLSessionTransport.swift /tmp/urlsession.ghosted.bak
+        printf '\n#if os(iOS)\nlet ghostedVacuityProbe: Int = "not an Int"\n#endif\n' \
+          >> Sources/Spoofing/URLSessionTransport.swift
+        if Tools/IOSTypeCheck/check.sh 6 >/dev/null 2>&1; then
+          cp /tmp/urlsession.ghosted.bak Sources/Spoofing/URLSessionTransport.swift
+          echo "::error::the app type-check passed with a known type error injected — it is vacuous"
+          exit 1
+        fi
+        cp /tmp/urlsession.ghosted.bak Sources/Spoofing/URLSessionTransport.swift
+        echo "harness correctly rejects an injected type error"
+
+    - name: Validate the Xcode project file
+      # Catches the class of project-file error that otherwise only shows up as an opaque
+      # Xcode failure: dangling object refs, duplicate object ids, a PBXBuildFile in two
+      # phases, a source file on disk that no target compiles.
+      run: python3 Tools/validate-pbxproj.py
+
+  routing-fixtures:
+    # GhostedCore's route providers are the one part of the new feature work whose *output*
+    # (request shape, response parsing) is asserted against hand-written fixtures. This job
+    # re-runs those tests and additionally pins the provider contract, so a change to
+    # `RouteProvider` that breaks an unimplemented conformance is caught without a device.
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Swift 6.3
+      run: |
+        curl -fsSL -o /tmp/swift.tar.gz \
+          https://download.swift.org/swift-6.3-release/ubuntu2404/swift-6.3-RELEASE/swift-6.3-RELEASE-ubuntu24.04.tar.gz
+        mkdir -p /tmp/swift
+        tar xzf /tmp/swift.tar.gz -C /tmp/swift --strip-components=1
+        echo "/tmp/swift/usr/bin" >> "$GITHUB_PATH"
+
+    - name: Build with warnings as errors
+      run: swift build -Xswiftc -warnings-as-errors
+
+    - name: Run the test suite
+      run: swift test

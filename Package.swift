@@ -21,7 +21,9 @@ let package = Package(
         //
         // This target does NOT contain the spoofing/alert code. That lives in
         // `Sources/Spoofing/` and `Sources/Alerts/`, which are iOS-only by their
-        // imports and belong to the Xcode app target alone — see AUDIT.md defect #2.
+        // imports and belong to the Xcode app target alone. `swift build` cannot see
+        // them; `Tools/IOSTypeCheck/check.sh` type-checks them against stub SDK modules
+        // and runs in CI via .github/workflows/app-typecheck.yml.
         // This target won't compile on Windows; that's expected — build GhostedCore
         // + tests there.
         .executableTarget(

@@ -21,13 +21,25 @@ import GhostedCore
 final class RouteStreamer {
 
     private var task: Task<Void, Never>?
+    /// Bumped by every `start()` and `stop()`. A run that finishes on its own only clears
+    /// `task` if it is still the current generation.
+    ///
+    /// Without this, `Task.cancel()` is cooperative: a superseded run can still be suspended
+    /// inside `sink(...)` when the replacement is installed, and its trailing
+    /// `self.task = nil` would null the *new* run's handle. The symptom is nasty — `isRunning`
+    /// reports `false` and `stop()` has nothing to cancel, while a live task keeps pushing
+    /// positions to the device with no way to shut it down.
+    private var generation: UInt64 = 0
     private var paused = false
     private var multiplier: Double = 1.0
-    private let sink: @Sendable (Coordinate) async throws -> Void
+    /// Receives every simulated step. The whole `MovementUpdate` rather than just the
+    /// coordinate: `bearing` is what lets `ProximityAlertManager` ignore cameras behind you,
+    /// and it exists nowhere else in the pipeline.
+    private let sink: @Sendable (MovementUpdate) async throws -> Void
 
-    /// - Parameter sink: receives every simulated position. `LocalSpoofingManager.setLocation(_:)`
+    /// - Parameter sink: receives every simulated step. `LocalSpoofingManager.setLocation(_:)`
     ///   is the intended implementation — it is the single seam where recovery happens.
-    init(sink: @escaping @Sendable (Coordinate) async throws -> Void) {
+    init(sink: @escaping @Sendable (MovementUpdate) async throws -> Void) {
         self.sink = sink
     }
 
@@ -38,6 +50,8 @@ final class RouteStreamer {
         stop()
         guard polyline.count > 1 else { return }
 
+        generation &+= 1
+        let run = generation
         let path = RoutePath(polyline)
         let sink = self.sink
         // Inherits MainActor isolation, so the pause/multiplier controls are readable here.
@@ -52,8 +66,14 @@ final class RouteStreamer {
                 if paused { continue }
 
                 let update = sim.step(dt: self.multiplier)
+                if update.finished {
+                    // Push the final position before tearing down, otherwise the device is
+                    // left reporting wherever the penultimate tick put it.
+                    try? await sink(update)
+                    break
+                }
                 do {
-                    try await sink(update.coordinate)
+                    try await sink(update)
                     failures = 0
                 } catch {
                     // The manager already attempts recovery; a long run of failures means
@@ -61,9 +81,9 @@ final class RouteStreamer {
                     failures += 1
                     if failures >= 10 { break }
                 }
-                if update.finished { break }
             }
-            self.task = nil
+            // Only clear our own handle: a newer run may already own `task`.
+            if run == self.generation { self.task = nil }
         }
     }
 
@@ -72,6 +92,7 @@ final class RouteStreamer {
     func setMultiplier(_ m: Double) { multiplier = max(0.1, min(m, 50)) }
 
     func stop() {
+        generation &+= 1
         task?.cancel()
         task = nil
     }

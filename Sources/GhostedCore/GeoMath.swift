@@ -56,9 +56,25 @@ public enum Geo {
         return d > 180 ? 360 - d : d
     }
 
-    /// Decodes a Google encoded polyline (precision 1e5).
+    /// Decimal places encoded in a polyline string.
+    ///
+    /// Google and Mapbox emit precision 1e5; OSRM, Valhalla and GraphHopper emit 1e6
+    /// (`polyline6`). Decoding with the wrong precision puts every point in the wrong place
+    /// by up to ~11 m, which is enough to put a route on the wrong street.
+    public enum PolylinePrecision: Int, Sendable {
+        case p1e5 = 5
+        case p1e6 = 6
+    }
+
+    /// Decodes an encoded polyline. Defaults to Google's 1e5 format.
     public static func decodePolyline(_ encoded: String) -> [Coordinate] {
+        decodePolyline(encoded, precision: .p1e5)
+    }
+
+    /// Decodes an encoded polyline at the given precision.
+    public static func decodePolyline(_ encoded: String, precision: PolylinePrecision) -> [Coordinate] {
         let bytes = Array(encoded.utf8)
+        let scale = Double(pow(10.0, Double(precision.rawValue)))
         var i = 0, lat = 0, lon = 0
         var out: [Coordinate] = []
 
@@ -78,8 +94,51 @@ public enum Geo {
             guard let dlat = nextValue(), let dlon = nextValue() else { break }
             lat += dlat
             lon += dlon
-            out.append(Coordinate(latitude: Double(lat) / 1e5, longitude: Double(lon) / 1e5))
+            out.append(Coordinate(latitude: Double(lat) / scale, longitude: Double(lon) / scale))
         }
+        return out
+    }
+
+    /// Encodes a polyline at the given precision — the inverse of `decodePolyline(_:precision:)`.
+    /// Used to hand a route to an API that wants polyline6, and by tests.
+    public static func encodePolyline(_ points: [Coordinate], precision: PolylinePrecision = .p1e5) -> String {
+        let scale = pow(10.0, Double(precision.rawValue))
+        var out: [UInt8] = []
+        var lastLat = 0, lastLon = 0
+        for p in points {
+            let lat = Int((p.latitude * scale).rounded())
+            let lon = Int((p.longitude * scale).rounded())
+            out.append(contentsOf: encodeValue(lat - lastLat))
+            out.append(contentsOf: encodeValue(lon - lastLon))
+            lastLat = lat
+            lastLon = lon
+        }
+        // Every byte emitted above is < 0x80, so the bytes are already a valid UTF-8 sequence.
+        return String(decoding: out, as: UTF8.self)
+    }
+
+    /// Encodes one signed delta into 5-bit groups, offset into printable ASCII.
+///
+/// Both halves of that offset are load-bearing and must agree exactly with `nextValue`, which
+/// subtracts 63 and stops at the first group below 0x20:
+///
+///   * continuation groups are `(0x20 | chunk) + 63` → bytes 95…126, which read back as
+///     32…63, i.e. always "keep going". The 0x20 bit is what guarantees that; a group whose low
+///     five bits happen to be zero must still not look like a terminator.
+///   * the final group is `chunk + 63` with no 0x20 bit → bytes 63…94, which read back below
+///     0x20 and therefore terminate the value.
+///
+/// Note the final byte can be 92 (backslash), so this output is *not* guaranteed to be safe to
+/// paste into a JSON string literal without escaping. That is inherent to the format, not a
+/// defect here; callers embedding a polyline in JSON must escape it like any other string.
+private static func encodeValue(_ value: Int) -> [UInt8] {
+        var v = value < 0 ? ~(value << 1) : (value << 1)
+        var out: [UInt8] = []
+        while v >= 0x20 {
+            out.append(UInt8(truncatingIfNeeded: (0x20 | (v & 0x1f)) + 63))
+            v >>= 5
+        }
+        out.append(UInt8(truncatingIfNeeded: v + 63))
         return out
     }
 }

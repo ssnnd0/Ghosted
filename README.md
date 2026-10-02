@@ -6,13 +6,13 @@ Ghosted is a Swift package and iOS app shell for route-aware, camera-aware locat
 
 ## Project status
 
-This is an **unbuilt draft**. The Swift has never been compiled — see AUDIT.md.
+Everything in this repo compiles and the test suite passes, but **it is still not a working app.** See AUDIT.md.
 
-- Core library: written, with 52 unit tests in 10 suites. Never compiled or run.
-- App shell: every source file is now compiled by a target, and the spoofing stack is
-  composed rather than merely written. It is still not a working app.
-- Spoofing and alert layers: in the Xcode app target, iOS-only, and **covered by no
-  test or CI type-check** — only the iOS build compiles them.
+- Core library: builds clean under Swift 6. 52 unit tests in 10 suites, all passing.
+- App shell: every source file is compiled by a target, and the spoofing stack is
+  composed rather than merely written.
+- Spoofing and alert layers: iOS-only, so invisible to `swift build`. They are type-checked
+  on every push by `Tools/IOSTypeCheck/check.sh`, wired into `.github/workflows/app-typecheck.yml`.
 - Device runtime contract: not implemented in compiled code; live validation must
   happen on a real iPhone. `IdeviceBackend` is a state skeleton with no FFI behind it,
   so the session will reach "ready" and then push nothing.
@@ -72,17 +72,22 @@ The live runtime contract is defined by these requirements:
 
 ## Verification
 
-The portable logic is intended to be verified on the host machine:
+Two independent checks cover the repo, because `swift build` cannot see the iOS app layer:
 
 ```bash
-swift test
+swift test                        # 52 tests, 10 suites, all against GhostedCore
+Tools/IOSTypeCheck/check.sh 6     # type-check Sources/Spoofing, Sources/Alerts, GhostedApp
+python3 Tools/validate-pbxproj.py # check the Xcode project file for structural errors
 ```
 
-The suite contains 52 tests across 10 suites, all against `GhostedCore`. **No run has
-been recorded**, so no pass/fail result can be claimed here.
-`.github/workflows/swift.yml` runs `swift build` and `swift test` on macOS against
-every push — but the iOS-only app layer is in no SwiftPM target, so that job does not
-compile it.
+`swift test` covers the portable logic. It compiles only the `Package.swift` targets, so on its
+own it says nothing about the roughly half of `Sources/` that belongs to the Xcode app target.
+`check.sh` closes that gap on any host with a Swift toolchain, using stub modules in place of the
+iOS SDK. It is a type-check, not a build, and it cannot check `@objc`/`#selector` — see
+`Tools/IOSTypeCheck/README.md` for exactly what it does and does not prove.
+
+CI runs all of them: `swift.yml` for the package, `app-typecheck.yml` for the app layer
+and project structure, and `build-ipa.yml` for a real Xcode build of the app itself.
 
 ## Files included
 
@@ -96,7 +101,11 @@ compile it.
 - Ghosted/               Info.plist, storyboard, asset catalog
 - Sources/               GhostedCore (portable), Ghosted (app shell), Spoofing, Alerts
 - Tests/                 SwiftPM tests for GhostedCore
-- .github/workflows/     iOS IPA build + SwiftPM test run
+- Config/                the app's entitlements file (empty by design — no private entitlements needed)
+- ExportOptions.plist    for a signed local archive (`xcodebuild -exportArchive`)
+- Tools/IOSTypeCheck/    stub-SDK type-check harness for the iOS-only app layer
+- Tools/validate-pbxproj.py  structural check of the Xcode project file
+- .github/workflows/     iOS IPA build + SwiftPM test run + app-layer type-check
 
 ## License
 

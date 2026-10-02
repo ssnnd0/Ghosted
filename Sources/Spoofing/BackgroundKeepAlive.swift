@@ -13,34 +13,53 @@ import CoreLocation
 ///
 /// Sideload-only: silent-audio keep-alive violates App Store guidelines. Expect noticeable battery drain, and
 /// note that Low Power Mode and thermal pressure can still get the app suspended.
-final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate {
+///
+/// `@unchecked Sendable`: the two `NotificationCenter` observers below are `@Sendable` closures, so they capture
+/// `self` and require a Sendable type. The instance is genuinely main-thread-confined — only
+/// `SpoofingSession` (itself `@MainActor`) creates and drives it, and both observers use `queue: .main` — so
+/// marking it `@MainActor` would express that more precisely. `@unchecked` is used instead because it is the
+/// minimal change that satisfies Swift 6 without making the observer bodies hop to the main actor. Revisit if
+/// the notification handling ever moves off the main queue.
+final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate, @unchecked Sendable {
     private var engine = AVAudioEngine()
     private var player = AVAudioPlayerNode()
     private let location = CLLocationManager()
     private var observers: [NSObjectProtocol] = []
 
+    /// - Throws: if the audio engine or session cannot be armed. On any throw the receiver is
+    ///   left fully torn down — see the `catch` below.
     func start() throws {
-        location.delegate = self
-        location.desiredAccuracy = kCLLocationAccuracyKilometer          // we don't need precision, just the privilege
-        location.pausesLocationUpdatesAutomatically = false
-        location.allowsBackgroundLocationUpdates = true
-        location.showsBackgroundLocationIndicator = true
-        if location.authorizationStatus == .notDetermined { location.requestWhenInUseAuthorization() }
-        location.startUpdatingLocation()
+        do {
+            location.delegate = self
+            location.desiredAccuracy = kCLLocationAccuracyKilometer          // we don't need precision, just the privilege
+            location.pausesLocationUpdatesAutomatically = false
+            location.allowsBackgroundLocationUpdates = true
+            location.showsBackgroundLocationIndicator = true
+            if location.authorizationStatus == .notDetermined { location.requestWhenInUseAuthorization() }
+            location.startUpdatingLocation()
 
-        try startSilentAudio()
+            try startSilentAudio()
 
-        let nc = NotificationCenter.default
-        observers.append(nc.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] note in
-            guard let raw = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
-                  AVAudioSession.InterruptionType(rawValue: raw) == .ended else { return }
-            try? self?.startSilentAudio()                                // phone call / Siri ended → resume
-        })
-        observers.append(nc.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: .main) { [weak self] _ in
-            try? self?.startSilentAudio()                                // mediaserverd restarted → rebuild everything
-        })
+            let nc = NotificationCenter.default
+            observers.append(nc.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: .main) { [weak self] note in
+                guard let raw = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+                      AVAudioSession.InterruptionType(rawValue: raw) == .ended else { return }
+                try? self?.startSilentAudio()                                // phone call / Siri ended → resume
+            })
+            observers.append(nc.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: .main) { [weak self] _ in
+                try? self?.startSilentAudio()                                // mediaserverd restarted → rebuild everything
+            })
+        } catch {
+            // `startSilentAudio()` throws *after* location updates are already running. Without
+            // this the caller is left holding an instance it never stored, so nothing can ever
+            // call `stop()` — the background location indicator stays on and the audio session
+            // stays active for the rest of the process, even though the session failed to start.
+            stop()
+            throw error
+        }
     }
 
+    /// Idempotent. Safe to call on a partially-started instance and more than once.
     func stop() {
         for observer in observers {
             NotificationCenter.default.removeObserver(observer)
@@ -49,7 +68,9 @@ final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate {
         player.stop()
         engine.stop()
         location.stopUpdatingLocation()
+        location.allowsBackgroundLocationIndicator = false
         location.allowsBackgroundLocationUpdates = false
+        location.delegate = nil
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 

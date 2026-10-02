@@ -15,6 +15,7 @@ import GhostedCore
 ///
 /// - `IdeviceBackend`      — native bridge (state only; the idevice FFI is not wired yet)
 /// - `LocalSpoofingManager`— lifecycle state machine: pairing → DDI → channel → heartbeat
+/// - `RoutePlanner`         — turn start/end points into a camera-aware route
 /// - `RouteStreamer`        — 1 Hz clock around the portable `MovementSimulator`
 /// - `BackgroundKeepAlive` — holds the background privileges the stream needs
 /// - `ProximityAlertManager`— consumes the *simulated* position, never CoreLocation's
@@ -52,15 +53,22 @@ final class SpoofingSession {
 
     var onPhaseChange: (@MainActor (Phase) -> Void)?
     var onAlert: (@MainActor (ProximityAlertManager.Alert) -> Void)?
+    /// Fired when a route finishes planning, successfully or not.
+    var onRoutePlanned: (@MainActor (Result<PlannedRoute, Error>) -> Void)?
 
     private let manager: LocalSpoofingManager
+    private let planner: RoutePlanner
     private let alerts: ProximityAlertManager?
     private var streamer: RouteStreamer?
     private var keepAlive: BackgroundKeepAlive?
 
+    /// The route currently streaming, so the UI can show exposure progress against it.
+    private(set) var activeRoute: PlannedRoute?
+
     /// - Parameter cameras: prebuilt camera index. Pass an empty quadtree when no
-    ///   GeoJSON export is present — proximity alerts are then simply inert.
-    init(cameras: CameraQuadtree) {
+    ///   GeoJSON export is present — proximity alerts are then simply inert and route
+    ///   planning skips avoidance rather than failing.
+    init(cameras: CameraQuadtree, planner: RoutePlanner? = nil) {
         let ddi = FileManager.default
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("DDI", isDirectory: true)
@@ -69,6 +77,9 @@ final class SpoofingSession {
             backend: IdeviceBackend(),
             config: LocalSpoofingManager.Config(ddiDirectory: ddi)
         )
+
+        let resolvedPlanner = planner ?? RoutePlanner.makeDefault(cameras: cameras)
+        self.planner = resolvedPlanner
 
         let built: ProximityAlertManager? = cameras.count > 0
             ? ProximityAlertManager(index: cameras)
@@ -102,30 +113,74 @@ final class SpoofingSession {
         }
     }
 
+    /// Plan a route from `origin` to `destination` and stream it, avoiding camera geofences.
+    ///
+    /// This is the entry point the UI should use. It reports through `onRoutePlanned` rather
+    /// than throwing, so a routing failure cannot take down a button handler, and it streams
+    /// nothing if planning fails — an unroutable request must not leave the device streaming a
+    /// stale path.
+    func planAndDrive(from origin: Coordinate, to destination: Coordinate) async {
+        do {
+            let planned = try await planner.plan(from: origin, to: destination)
+            guard planned.polyline.count > 1 else { throw RouterError.noRoute }
+            onRoutePlanned?(.success(planned))
+            drive(route: planned.polyline)
+            activeRoute = planned
+        } catch {
+            // Fail closed: stop whatever was streaming before reporting the failure.
+            stopStreaming()
+            activeRoute = nil
+            onRoutePlanned?(.failure(error))
+        }
+    }
+
     /// Stream `route` through the manager at 1 Hz. Replaces any run in progress.
+    ///
+    /// Prefer `planAndDrive(from:to:)` — this takes an already-planned polyline and therefore
+    /// performs no camera avoidance of its own.
     func drive(route: [Coordinate]) {
         streamer?.stop()          // the old Task would otherwise keep streaming
 
         let manager = self.manager
         let alerts = self.alerts
-        let streamer = RouteStreamer { coordinate in
+        let streamer = RouteStreamer { update in
             // The one seam: the manager owns recovery, so a dropped tunnel is repaired here.
-            try await manager.setLocation(coordinate)
-            await alerts?.update(position: coordinate, heading: nil)
+            try await manager.setLocation(update.coordinate)
+            // The heading is what makes the manager ignore cameras behind you; passing nil
+            // here would silently disable that filter.
+            await alerts?.update(position: update.coordinate, heading: update.bearing)
         }
         self.streamer = streamer
         streamer.start(polyline: route)
     }
 
+    /// Exposure of the route currently streaming, for a progress readout.
+    func exposureStatus() -> RouteExposureStatus? {
+        guard let activeRoute else { return nil }
+        return planner.previewExposure(of: activeRoute.polyline)
+    }
+
+    var isStreaming: Bool { streamer?.isRunning ?? false }
+
+    func pause() { streamer?.pause() }
+    func resume() { streamer?.resume() }
+
     func setMultiplier(_ m: Double) {
         streamer?.setMultiplier(m)
+    }
+
+    /// Stops the position stream but leaves the device session open. `stop()` tears everything
+    /// down; this is what "end this drive" should call, so the session survives a re-plan.
+    func stopStreaming() {
+        streamer?.stop()
+        streamer = nil
+        activeRoute = nil
     }
 
     /// Always call this when a trip ends — it clears the simulated position so every
     /// other app sees real GPS again.
     func stop() async {
-        streamer?.stop()
-        streamer = nil
+        stopStreaming()
         keepAlive?.stop()
         keepAlive = nil
         await manager.stop()

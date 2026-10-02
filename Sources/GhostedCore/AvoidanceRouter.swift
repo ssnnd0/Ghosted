@@ -14,9 +14,8 @@ public struct RouteCandidate: Sendable {
     }
 }
 
-/// Anything that can produce driving routes. `GoogleRoutesProvider` is included (iOS target);
-/// a Valhalla/GraphHopper implementation (which can take avoid-polygons natively) can be dropped
-/// in without touching the algorithm.
+/// Anything that can produce driving routes. `AvoidanceRouter` only ever sees this protocol, so
+/// swapping OSRM for a self-hosted Valhalla changes nothing above it.
 public protocol RouteProvider: Sendable {
     /// `via` waypoints must be treated as pass-through (not stops).
     /// `alternatives` is a hint; many APIs only return alternatives when there are no intermediate waypoints.
@@ -24,6 +23,26 @@ public protocol RouteProvider: Sendable {
                 to destination: Coordinate,
                 via: [Coordinate],
                 alternatives: Bool) async throws -> [RouteCandidate]
+
+    /// Variants that can honour exclusion polygons natively — Valhalla among them — override this
+    /// and the route never has to pass within `radius` of a rectangle. The default implementation
+    /// ignores the rectangles, which leaves `AvoidanceRouter`'s waypoint-detour strategy in charge;
+    /// that is a correct fallback, just a weaker guarantee.
+    func routes(from origin: Coordinate,
+                to destination: Coordinate,
+                via: [Coordinate],
+                alternatives: Bool,
+                excluding: [GeoRect]) async throws -> [RouteCandidate]
+}
+
+extension RouteProvider {
+    public func routes(from origin: Coordinate,
+                       to destination: Coordinate,
+                       via: [Coordinate],
+                       alternatives: Bool,
+                       excluding: [GeoRect]) async throws -> [RouteCandidate] {
+        try await routes(from: origin, to: destination, via: via, alternatives: alternatives)
+    }
 }
 
 // MARK: - Exposure analysis (route ↔ camera geofences)
@@ -144,7 +163,23 @@ public struct AvoidanceOutcome: Sendable {
     }
 }
 
-public enum RouterError: Error { case noRoute, http(Int, String) }
+public enum RouterError: Error, Equatable, CustomStringConvertible {
+    case noRoute
+    case http(Int, String)
+    /// The provider answered, but the answer was not usable: an error payload, a body that does
+    /// not match the documented shape, or a request that could not be built. `noRoute` means "no
+    /// path exists"; this means "we could not read the answer", which is worth showing a user
+    /// verbatim because it almost always names a misconfigured base URL or API key.
+    case providerFailure(String)
+
+    public var description: String {
+        switch self {
+        case .noRoute: return "No route found between those points."
+        case .http(let status, let body): return "Routing server returned HTTP \(status): \(body)"
+        case .providerFailure(let message): return message
+        }
+    }
+}
 
 public final class AvoidanceRouter: Sendable {
     private let provider: RouteProvider

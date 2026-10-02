@@ -1,6 +1,6 @@
 # Ghosted — architecture notes
 
-**Status:** none of this has been compiled (no Swift toolchain was available while writing it), and the native `idevice` layer is a skeleton. Treat the Swift as a carefully reasoned first draft, not a working build. Written for Swift 5 language mode, iOS 17.4+.
+**Status:** the portable library compiles and its 52 tests pass; the iOS app layer is type-checked on every push against stub SDK modules (`Tools/IOSTypeCheck/`). The native `idevice` layer is still a skeleton with no FFI behind it. Swift 6 language mode, iOS 17.4+.
 
 ## Where the original prompt's premises were wrong
 
@@ -12,7 +12,7 @@
 | "Private entitlements in Info.plist" | Entitlements aren't Info.plist keys. This design needs none (see `Config/Ghosted.entitlements`). TrollStore, as far as I know, only exists for iOS ≤ 17.0, which is below the 17.4 floor of this stack. |
 | "GoogleMaps SDK … turn-by-turn overlay" | The standard Maps SDK draws maps, traffic and polylines. Turn-by-turn is a separate, access-gated product (Navigation SDK). Without it, build the overlay from the Routes API's step instructions plus your own progress tracking. |
 | "Quadtree so thousands of pins don't OOM" | The *data* is tiny (100k points ≈ a few MB). The OOM risk is creating thousands of `GMSMarker`s. The fix is viewport-limited, clustered rendering (below). The quadtree earns its keep on the routing side. |
-| "Insert waypoints to detour around a 500 m radius" | Works as a heuristic, not a guarantee: waypoints snap to roads, and dense cities may have no route clear of a 500 m circle. `AvoidanceRouter` verifies every returned polyline and reports what's left. For hard exclusion, use a router with avoid-polygons (Valhalla, GraphHopper, OpenRouteService) behind the same `RouteProvider` protocol. |
+| "Insert waypoints to detour around a 500 m radius" | Works as a heuristic, not a guarantee: waypoints snap to roads, and dense cities may have no route clear of a 500 m circle. `AvoidanceRouter` verifies every returned polyline and reports what's left. For hard exclusion, use a router with avoid-polygons — `ValhallaRouteProvider` does this natively and receives the camera rectangles via `RouteProvider.routes(from:to:via:alternatives:excluding:)`. |
 
 Licensing: StikDebug is AGPL-3.0. Copying its code makes your app AGPL. Check the licenses of `idevice` and Google-Maps-iOS-Utils before distributing.
 
@@ -25,31 +25,45 @@ Ghosted/
 │   └── Ghosted.entitlements            intentionally empty — this design needs none
 ├── Sources/
 │   ├── GhostedCore/                    portable, Foundation-only, host-testable
-│   │   ├── GeoMath.swift                haversine, bearings, segment distance, RoutePath
+│   │   ├── GeoMath.swift                haversine, bearings, segment distance, RoutePath, polyline codec
 │   │   ├── CameraIndex.swift            CameraNode, quadtree, GeoJSON loader
-│   │   ├── AvoidanceRouter.swift        exposure analysis, detour search, Google Routes provider
+│   │   ├── AvoidanceRouter.swift        RouteProvider protocol, exposure analysis, detour search
+│   │   ├── RouteProviders.swift         HTTPTransport + OSRM / Valhalla / GraphHopper providers
 │   │   ├── MovementSimulator.swift      route driving simulation (clock-free, seedable)
 │   │   ├── RouteExposureStatus.swift    runtime risk summary
 │   │   └── Coordinate.swift             value-type coordinate
 │   ├── Ghosted/                        the app shell; the single entry point
 │   │   ├── GhostedApp.swift             UIKit entry point, shell UI, runtime contract
 │   │   ├── SpoofingSession.swift        composition root — the only place the pieces meet
+│   │   ├── RoutePlanner.swift           origin/destination → camera-aware route
 │   │   ├── RouteStreamer.swift          1 Hz clock around the portable MovementSimulator
 │   │   └── RuntimeContract.swift        on-screen runtime contract checklist
 │   ├── Spoofing/
 │   │   ├── LocalSpoofingManager.swift   state machine, recovery, pairing store
-│   │   ├── IdeviceBackend.swift         native adapter (skeleton — wire to idevice FFI)
+│   │   ├── IdeviceBackend.swift         state-tracking adapter; refuses rather than fakes a session
+│   │   ├── IdeviceFFIBackend.swift      libimobiledevice adapter — behind IDEVICE_FFI_ENABLED (off)
+│   │   ├── URLSessionTransport.swift    URLSession → GhostedCore.HTTPTransport
 │   │   └── BackgroundKeepAlive.swift    silent audio + background location
 │   └── Alerts/
 │       └── ProximityAlertManager.swift
+├── Sources/IdeviceFFI/                 C shim over libimobiledevice — NOT in any build target
 ├── Ghosted/                            Info.plist, LaunchScreen.storyboard, Assets.xcassets
-└── Resources/cameras.geojson           not included: your DeFlock/OSM export
+├── ExportOptions.plist                 for a *signed* local archive (xcodebuild -exportArchive)
+├── Tests/GhostedTests/                 87 tests, GhostedCore only
+└── Tools/
+    ├── IOSTypeCheck/                   stub-SDK type-check harness for the iOS-only layer
+    └── validate-pbxproj.py             structural check of the Xcode project file
 ```
+
+There is no bundled `cameras.geojson`: drop your own DeFlock/OSM export into the app's
+Documents folder (exposed over Finder via `UIFileSharingEnabled`). Until then the camera
+index is empty and proximity alerts are inert — the route stream still works.
 
 Everything under `Sources/Spoofing` and `Sources/Alerts` is compiled by the **Xcode app
 target only**. Those files import UIKit/AVFoundation/CoreLocation/Network/Security, so
 they are iOS-only by construction and belong to neither the portable `GhostedCore`
-target nor the SwiftPM `Ghosted` target. `swift test` does not type-check them.
+target nor the SwiftPM `Ghosted` target. `swift test` does not type-check them;
+`Tools/IOSTypeCheck/check.sh` does, against stub SDK modules, on every push.
 
 `Sources/Ghosted` is compiled by *both* the Xcode app target and the SwiftPM `Ghosted`
 target, so the two build systems share one entry point. Because the SwiftPM target also

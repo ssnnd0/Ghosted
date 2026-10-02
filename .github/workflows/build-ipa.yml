@@ -24,14 +24,11 @@ jobs:
           sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
           xcode-select -p
 
-      - name: Install dependencies
-        run: |
-          if [ -f "Podfile" ]; then
-            pod install
-          fi
-
       - name: Build for iOS (device arm64, unsigned)
         run: |
+          # `-exportArchive` is not used here: it needs a signing identity, which CI does not
+          # have. The .app is zipped into an unsigned IPA below instead. A locally signed
+          # archive can be exported with the checked-in ExportOptions.plist.
           xcodebuild \
             -scheme Ghosted \
             -configuration Release \

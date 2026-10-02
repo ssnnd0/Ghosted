@@ -1,10 +1,13 @@
 {
+    // The SwiftPM `Ghosted` executable target lives at Sources/Ghosted and links GhostedCore.
+    // Its `cwd` must be the *package root* so SwiftPM can find Package.swift — not the
+    // Ghosted/ resources directory, which is a different folder with no package manifest.
     "configurations": [
         {
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:Ghosted}",
+            "cwd": "${workspaceFolder}",
             "name": "Debug Ghosted",
             "target": "Ghosted",
             "configuration": "debug",
@@ -14,7 +17,7 @@
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:Ghosted}",
+            "cwd": "${workspaceFolder}",
             "name": "Release Ghosted",
             "target": "Ghosted",
             "configuration": "release",

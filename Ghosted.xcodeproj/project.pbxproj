@@ -24,7 +24,11 @@
         2A00000000000000 /* RouteStreamer.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3A00000000000000 /* RouteStreamer.swift */; };
         2B00000000000000 /* BackgroundKeepAlive.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3600000000000000 /* BackgroundKeepAlive.swift */; };
         2C00000000000000 /* ProximityAlertManager.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3700000000000000 /* ProximityAlertManager.swift */; };
-        2D00000000000000 /* SpoofingSession.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3800000000000000 /* SpoofingSession.swift */; };
+        2D00000000000000 /* SpoofingSession.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3800000000000000 /* SpoofingSession.swift */ };
+        2F00000000000003 /* RouteProviders.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000001 /* RouteProviders.swift */; };
+        2F00000000000001 /* RoutePlanner.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000002 /* RoutePlanner.swift */; };
+        2F00000000000002 /* URLSessionTransport.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000003 /* URLSessionTransport.swift */; };
+        2F00000000000004 /* IdeviceFFIBackend.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000004 /* IdeviceFFIBackend.swift */; };
         /* End PBXBuildFile section */
 
         /* Begin PBXFileReference section */
@@ -33,6 +37,7 @@
         1300000000000000 /* Ghosted/LaunchScreen.storyboard */ = { isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
         1400000000000000 /* Ghosted/Info.plist */ = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
         1500000000000000 /* Ghosted/Assets.xcassets */ = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+        4B00000000000000 /* Ghosted.entitlements */ = { isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ghosted.entitlements; sourceTree = "<group>"; };
         1600000000000000 /* UIKit.framework */ = { isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
         1700000000000000 /* AvoidanceRouter.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvoidanceRouter.swift; sourceTree = "<group>"; };
         1800000000000000 /* CameraIndex.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraIndex.swift; sourceTree = "<group>"; };
@@ -47,6 +52,10 @@
         3600000000000000 /* BackgroundKeepAlive.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundKeepAlive.swift; sourceTree = "<group>"; };
         3700000000000000 /* ProximityAlertManager.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProximityAlertManager.swift; sourceTree = "<group>"; };
         3800000000000000 /* SpoofingSession.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpoofingSession.swift; sourceTree = "<group>"; };
+        3B00000000000001 /* RouteProviders.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProviders.swift; sourceTree = "<group>"; };
+        3B00000000000002 /* RoutePlanner.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlanner.swift; sourceTree = "<group>"; };
+        3B00000000000003 /* URLSessionTransport.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTransport.swift; sourceTree = "<group>"; };
+        3B00000000000004 /* IdeviceFFIBackend.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeviceFFIBackend.swift; sourceTree = "<group>"; };
         3A00000000000000 /* RouteStreamer.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStreamer.swift; sourceTree = "<group>"; };
         /* End PBXFileReference section */
 
@@ -68,12 +77,13 @@
         /* End PBXFrameworksBuildPhase section */
 
         /* Begin PBXGroup section */
-        3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
+        3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000, 3B00000000000001); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
         3200000000000000 /* GhostedResources */ = { isa = PBXGroup; children = (1300000000000000, 1400000000000000, 1500000000000000); name = Ghosted; path = Ghosted; sourceTree = "<group>"; };
-        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3400000000000000, 3900000000000000, 3B00000000000000, 3200000000000000); sourceTree = "<group>"; };
-        3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000, 1200000000000000, 3800000000000000, 3A00000000000000); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
-        3900000000000000 /* SpoofingGroup */ = { isa = PBXGroup; children = (2E00000000000000, 2F00000000000000, 3600000000000000); name = Spoofing; path = Sources/Spoofing; sourceTree = "<group>"; };
+        3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3400000000000000, 3900000000000000, 3B00000000000000, 4A00000000000000, 3200000000000000); sourceTree = "<group>"; };
+        3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000, 1200000000000000, 3800000000000000, 3A00000000000000, 3B00000000000002); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
+        3900000000000000 /* SpoofingGroup */ = { isa = PBXGroup; children = (2E00000000000000, 2F00000000000000, 3600000000000000, 3B00000000000003, 3B00000000000004); name = Spoofing; path = Sources/Spoofing; sourceTree = "<group>"; };
         3B00000000000000 /* AlertsGroup */ = { isa = PBXGroup; children = (3700000000000000); name = Alerts; path = Sources/Alerts; sourceTree = "<group>"; };
+        4A00000000000000 /* ConfigGroup */ = { isa = PBXGroup; children = (4B00000000000000); name = Config; path = Config; sourceTree = "<group>"; };
         /* End PBXGroup section */
 
         /* Begin PBXNativeTarget section */
@@ -130,13 +140,13 @@
         /* End PBXResourcesBuildPhase section */
 
         /* Begin PBXSourcesBuildPhase section */
-        6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000); runOnlyForDeploymentPostprocessing = 0; };
-        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000, 0F00000000000000, 1E00000000000000, 2A00000000000000, 2B00000000000000, 2C00000000000000, 2D00000000000000); runOnlyForDeploymentPostprocessing = 0; };
+        6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000, 2F00000000000003); runOnlyForDeploymentPostprocessing = 0; };
+        6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000, 0F00000000000000, 1E00000000000000, 2A00000000000000, 2B00000000000000, 2C00000000000000, 2D00000000000000, 2F00000000000001, 2F00000000000002, 2F00000000000004); runOnlyForDeploymentPostprocessing = 0; };
         /* End PBXSourcesBuildPhase section */
 
         /* Begin PBXTargetDependency section */
         7000000000000000 /* PBXTargetDependency */ = { isa = PBXTargetDependency; target = 4000000000000000 /* GhostedCore */; targetProxy = 7100000000000000 /* PBXContainerItemProxy */; };
-        7100000000000000 /* PBXContainerItemProxy */ = { isa = PBXContainerItemProxy; containerPortal = 8000000000000000 /* Project object */; proxyType = 1; remoteGlobalIDString = 1100000000000000; remoteInfo = GhostedCore; };
+        7100000000000000 /* PBXContainerItemProxy */ = { isa = PBXContainerItemProxy; containerPortal = 8000000000000000 /* Project object */; proxyType = 1; remoteGlobalIDString = 4000000000000000; remoteInfo = GhostedCore; };
         /* End PBXTargetDependency section */
 
         /* Begin XCBuildConfiguration section */
@@ -159,7 +169,7 @@
                 ONLY_ACTIVE_ARCH = YES;
                 SDKROOT = iphoneos;
                 SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-                SWIFT_VERSION = 5.9;
+                SWIFT_VERSION = 6.0;
             };
             name = Debug;
         };
@@ -180,7 +190,7 @@
                 MTL_ENABLE_DEBUG_INFO = NO;
                 SDKROOT = iphoneos;
                 SWIFT_OPTIMIZATION_LEVEL = "-O";
-                SWIFT_VERSION = 5.9;
+                SWIFT_VERSION = 6.0;
             };
             name = Release;
         };
@@ -193,13 +203,13 @@
                 DYLIB_COMPATIBILITY_VERSION = 1;
                 DYLIB_CURRENT_VERSION = 1;
                 DYLIB_INSTALL_NAME_BASE = "@rpath";
+                GENERATE_INFOPLIST_FILE = YES;
                 INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
                 MARKETING_VERSION = 1.0;
                 PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
                 PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
                 SKIP_INSTALL = YES;
-                SWIFT_LANGUAGE_MODE = "Swift";
                 VERSIONING_SYSTEM = "apple-generic";
             };
             name = Debug;
@@ -213,13 +223,13 @@
                 DYLIB_COMPATIBILITY_VERSION = 1;
                 DYLIB_CURRENT_VERSION = 1;
                 DYLIB_INSTALL_NAME_BASE = "@rpath";
+                GENERATE_INFOPLIST_FILE = YES;
                 INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
                 LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
                 MARKETING_VERSION = 1.0;
                 PRODUCT_BUNDLE_IDENTIFIER = "com.ssnn.GhostedCore";
                 PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
                 SKIP_INSTALL = YES;
-                SWIFT_LANGUAGE_MODE = "Swift";
                 VERSIONING_SYSTEM = "apple-generic";
             };
             name = Release;
@@ -229,6 +239,7 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+                CODE_SIGN_ENTITLEMENTS = Config/Ghosted.entitlements;
                 CODE_SIGN_STYLE = Automatic;
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
@@ -239,7 +250,7 @@
                 PRODUCT_NAME = Ghosted;
                 SDKROOT = iphoneos;
                 SWIFT_EMIT_LOC_STRINGS = YES;
-                SWIFT_VERSION = 5.9;
+                SWIFT_VERSION = 6.0;
                 TARGETED_DEVICE_FAMILY = 1;
             };
             name = Debug;
@@ -249,6 +260,7 @@
             buildSettings = {
                 ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
                 ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+                CODE_SIGN_ENTITLEMENTS = Config/Ghosted.entitlements;
                 CODE_SIGN_STYLE = Automatic;
                 CURRENT_PROJECT_VERSION = 1;
                 DEVELOPMENT_TEAM = "";
@@ -259,7 +271,7 @@
                 PRODUCT_NAME = Ghosted;
                 SDKROOT = iphoneos;
                 SWIFT_EMIT_LOC_STRINGS = YES;
-                SWIFT_VERSION = 5.9;
+                SWIFT_VERSION = 6.0;
                 TARGETED_DEVICE_FAMILY = 1;
             };
             name = Release;
