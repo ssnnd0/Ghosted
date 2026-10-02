@@ -1,5 +1,8 @@
 name: Build iOS App (IPA)
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -26,9 +29,6 @@ jobs:
 
       - name: Build for iOS (device arm64, unsigned)
         run: |
-          # `-exportArchive` is not used here: it needs a signing identity, which CI does not
-          # have. The .app is zipped into an unsigned IPA below instead. A locally signed
-          # archive can be exported with the checked-in ExportOptions.plist.
           xcodebuild \
             -scheme Ghosted \
             -configuration Release \
@@ -39,9 +39,6 @@ jobs:
             build
 
       - name: Package unsigned IPA
-        # -exportArchive cannot run without a signing identity, so the .app is
-        # zipped into an unsigned IPA by hand. It must be re-signed (free Personal
-        # Team or a paid team) before it can be installed on a device.
         run: |
           APP="build/Build/Products/Release-iphoneos/Ghosted.app"
           test -d "$APP" || { echo "::error::Built app not found at $APP"; exit 1; }
