@@ -28,7 +28,6 @@ open class CLLocationManager: NSObject {
     open var pausesLocationUpdatesAutomatically: Bool = true
     open var allowsBackgroundLocationUpdates: Bool = false
     open var showsBackgroundLocationIndicator: Bool = false
-    open var allowsBackgroundLocationIndicator: Bool = false
     open var authorizationStatus: CLAuthorizationStatus { .notDetermined }
     open func requestWhenInUseAuthorization() {}
     open func requestAlwaysAuthorization() {}

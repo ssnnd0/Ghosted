@@ -68,7 +68,7 @@ final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate, @unchecked
         player.stop()
         engine.stop()
         location.stopUpdatingLocation()
-        location.allowsBackgroundLocationIndicator = false
+        location.showsBackgroundLocationIndicator = false
         location.allowsBackgroundLocationUpdates = false
         location.delegate = nil
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
