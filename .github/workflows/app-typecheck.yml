@@ -1,6 +1,6 @@
 # Type-checks the iOS-only app layer (Sources/Spoofing, Sources/Alerts, the `#if os(iOS)` branch
-# of Sources/Ghosted). Those files belong to the Xcode app target alone and are invisible to
-# `swift build`, so without this job nothing but build-ipa.yml would ever compile them.
+# of Sources/Ghosted). Host SwiftPM builds exclude those iOS branches; this job checks them
+# against stub SDK modules, while Xcode and xtool provide full iOS builds.
 #
 # Runs on Linux with a pinned toolchain rather than macos-latest: the check needs no Apple SDK, and
 # pinning Swift explicitly keeps this job independent of the runner image's Xcode version. The

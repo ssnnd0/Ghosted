@@ -4,10 +4,8 @@
 #
 # WHY THIS EXISTS
 #   Sources/Spoofing, Sources/Alerts and the `#if os(iOS)` half of Sources/Ghosted are compiled by
-#   exactly one target: the iOS app target in Ghosted.xcodeproj. `swift build` cannot see them, so
-#   until `build-ipa.yml` ran, a signature slip in those files could reach master unnoticed
-#   (AUDIT.md defect #2). This script closes that hole by compiling them against the stub modules
-#   in ./Stubs.
+#   both Ghosted.xcodeproj and the SwiftPM Ghosted product used by xtool. A host `swift build`
+#   excludes the iOS branches, so this script type-checks them against the stub modules in ./Stubs.
 #
 # WHAT THIS IS NOT
 #   This is NOT a build of the app. It is a type-check only: no linking, no code generation, no
@@ -42,6 +40,10 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
 MODULES=(UIKit CoreLocation AVFoundation Network Security)
+SWIFT_BUILD_OPTIONS=()
+if [ -n "${SWIFT_BUILD_SCRATCH_PATH:-}" ]; then
+    SWIFT_BUILD_OPTIONS+=(--scratch-path "$SWIFT_BUILD_SCRATCH_PATH")
+fi
 
 say() { printf '\n\033[1m==> %s\033[0m\n' "$*"; }
 die() { printf '\033[31merror: %s\033[0m\n' "$*" >&2; exit 1; }
@@ -52,8 +54,8 @@ command -v swiftc >/dev/null || die "no 'swiftc' on PATH"
 # --- 1. GhostedCore, the portable library the app layer imports ---------------------
 say "Building GhostedCore"
 cd "$ROOT"
-swift build --target GhostedCore >/dev/null
-BIN_DIR="$(swift build --show-bin-path)"
+swift build "${SWIFT_BUILD_OPTIONS[@]}" --target GhostedCore >/dev/null
+BIN_DIR="$(swift build "${SWIFT_BUILD_OPTIONS[@]}" --show-bin-path)"
 [ -f "$BIN_DIR/Modules/GhostedCore.swiftmodule" ] || die "GhostedCore.swiftmodule not found in $BIN_DIR/Modules"
 CORE_INCLUDE="$BIN_DIR/Modules"
 
@@ -116,5 +118,5 @@ if [ $STATUS -ne 0 ]; then
 fi
 
 say "OK — app layer type-checks under Swift $SWIFT_VERSION"
-echo "    Sources/Spoofing, Sources/Alerts, Sources/Ghosted (iOS branch)"
+echo "    Sources/Spoofing, Sources/Alerts, Sources/Ghosted (iOS branch; Xcode + xtool product)"
 echo "    Note: @objc / #selector / @main-on-AppDelegate are NOT checked here (no ObjC runtime)."

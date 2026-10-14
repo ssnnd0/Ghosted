@@ -8,6 +8,11 @@ let package = Package(
     // down to SPM's major.minor granularity). macOS is listed because swift.yml runs
     // `swift test` there; without a platforms clause SPM silently assumes macOS 10.13.
     platforms: [.iOS(.v17), .macOS(.v13)],
+    products: [
+        // xtool packages this library product as the iOS application. Its @main entry point
+        // is active on iOS; the host-only stub remains available for non-iOS Swift builds.
+        .library(name: "Ghosted", targets: ["Ghosted"]),
+    ],
     targets: [
         // Cross-platform library: geodesy, quadtree, route avoidance, movement simulation.
         // Compiles on macOS, Linux and Windows (no UIKit / AVFoundation / CoreLocation dependency).
@@ -16,20 +21,14 @@ let package = Package(
             path: "Sources/GhostedCore"
         ),
 
-        // Executable that keeps the app's `@main` and runtime contract in one place,
-        // compiled off-iOS too (each file guards itself with `#if os(iOS)`).
-        //
-        // This target does NOT contain the spoofing/alert code. That lives in
-        // `Sources/Spoofing/` and `Sources/Alerts/`, which are iOS-only by their
-        // imports and belong to the Xcode app target alone. `swift build` cannot see
-        // them; `Tools/IOSTypeCheck/check.sh` type-checks them against stub SDK modules
-        // and runs in CI via .github/workflows/app-typecheck.yml.
-        // This target won't compile on Windows; that's expected — build GhostedCore
-        // + tests there.
-        .executableTarget(
+        // App module shared by Xcode and xtool. iOS-only files guard their imports and
+        // declarations so host Swift builds retain the non-iOS @main stub.
+        .target(
             name: "Ghosted",
             dependencies: ["GhostedCore"],
-            path: "Sources/Ghosted"
+            path: "Sources",
+            exclude: ["GhostedCore", "IdeviceFFI"],
+            sources: ["Ghosted", "Spoofing", "Alerts"]
         ),
 
         .testTarget(

@@ -29,6 +29,8 @@
         2F00000000000001 /* RoutePlanner.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000002 /* RoutePlanner.swift */; };
         2F00000000000002 /* URLSessionTransport.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000003 /* URLSessionTransport.swift */; };
         2F00000000000004 /* IdeviceFFIBackend.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3B00000000000004 /* IdeviceFFIBackend.swift */; };
+        3C00000000000001 /* AppSettings.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3D00000000000001 /* AppSettings.swift */; };
+        3C00000000000002 /* RouteLibrary.swift in Sources */ = { isa = PBXBuildFile; fileRef = 3D00000000000002 /* RouteLibrary.swift */; };
         /* End PBXBuildFile section */
 
         /* Begin PBXFileReference section */
@@ -56,6 +58,8 @@
         3B00000000000002 /* RoutePlanner.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlanner.swift; sourceTree = "<group>"; };
         3B00000000000003 /* URLSessionTransport.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionTransport.swift; sourceTree = "<group>"; };
         3B00000000000004 /* IdeviceFFIBackend.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdeviceFFIBackend.swift; sourceTree = "<group>"; };
+        3D00000000000001 /* AppSettings.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+        3D00000000000002 /* RouteLibrary.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteLibrary.swift; sourceTree = "<group>"; };
         3A00000000000000 /* RouteStreamer.swift */ = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteStreamer.swift; sourceTree = "<group>"; };
         /* End PBXFileReference section */
 
@@ -77,7 +81,7 @@
         /* End PBXFrameworksBuildPhase section */
 
         /* Begin PBXGroup section */
-        3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000, 3B00000000000001); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
+        3000000000000000 /* GhostedCoreGroup */ = { isa = PBXGroup; children = (1700000000000000, 1800000000000000, 1900000000000000, 1A00000000000000, 1B00000000000000, 1C00000000000000, 3B00000000000001, 3D00000000000001, 3D00000000000002); name = GhostedCore; path = Sources/GhostedCore; sourceTree = "<group>"; };
         3200000000000000 /* GhostedResources */ = { isa = PBXGroup; children = (1300000000000000, 1400000000000000, 1500000000000000); name = Ghosted; path = Ghosted; sourceTree = "<group>"; };
         3300000000000000 /* Root */ = { isa = PBXGroup; children = (3000000000000000, 3400000000000000, 3900000000000000, 3B00000000000000, 4A00000000000000, 3200000000000000); sourceTree = "<group>"; };
         3400000000000000 /* AppSharedGroup */ = { isa = PBXGroup; children = (1F00000000000000, 1200000000000000, 3800000000000000, 3A00000000000000, 3B00000000000002); name = Ghosted; path = Sources/Ghosted; sourceTree = "<group>"; };
@@ -140,7 +144,7 @@
         /* End PBXResourcesBuildPhase section */
 
         /* Begin PBXSourcesBuildPhase section */
-        6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000, 2F00000000000003); runOnlyForDeploymentPostprocessing = 0; };
+        6000000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0700000000000000, 0800000000000000, 0900000000000000, 0A00000000000000, 0B00000000000000, 0C00000000000000, 2F00000000000003, 3C00000000000001, 3C00000000000002); runOnlyForDeploymentPostprocessing = 0; };
         6100000000000000 /* Sources */ = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (0200000000000000, 0D00000000000000, 0F00000000000000, 1E00000000000000, 2A00000000000000, 2B00000000000000, 2C00000000000000, 2D00000000000000, 2F00000000000001, 2F00000000000002, 2F00000000000004); runOnlyForDeploymentPostprocessing = 0; };
         /* End PBXSourcesBuildPhase section */
 

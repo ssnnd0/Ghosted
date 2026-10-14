@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 // `NWConnection` is captured by `stateUpdateHandler` and by the timeout block in `probeLoopback`.
 // Both closures are `@Sendable`, and Network.framework does not vended `NWConnection` as `Sendable`,
@@ -319,3 +320,4 @@ private final class Once: @unchecked Sendable {
         if !alreadyFired { body() }
     }
 }
+#endif

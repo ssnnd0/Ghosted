@@ -7,17 +7,16 @@ Tools/IOSTypeCheck/check.sh        # Swift 6 (what the Xcode targets now use)
 Tools/IOSTypeCheck/check.sh 5      # Swift 5, for regression comparison
 ```
 
+Set `SWIFT_BUILD_SCRATCH_PATH` to use an isolated SwiftPM build directory, for example
+when the repository's default `.build` directory is not writable.
+
 ## Why this exists
 
-Roughly half of `Sources/` — all of `Sources/Spoofing`, all of `Sources/Alerts`, and the
-`#if os(iOS)` branch of `Sources/Ghosted` — is compiled by exactly one target: the iOS app target in
-`Ghosted.xcodeproj`. It is invisible to `swift build`, which compiles only the `Package.swift`
-targets (`GhostedCore` and its test suite).
-
-Until `.github/workflows/build-ipa.yml` existed, that meant a change to those files could break the
-iOS build without any local command or any CI job noticing. AUDIT.md logged this as defect #2.
-This script is the cheap, fast signal that closes it, running in well under a minute on a Linux
-container.
+The iOS implementation in `Sources/Spoofing`, `Sources/Alerts`, and the `#if os(iOS)` branches
+of `Sources/Ghosted` is compiled by both the iOS app target in `Ghosted.xcodeproj` and the
+SwiftPM `Ghosted` library product used by xtool. A host `swift build` sees these sources but
+excludes their iOS branches, so it does not type-check the device implementation. This harness
+provides fast feedback on Linux without an iOS SDK, complementing the full Xcode and xtool builds.
 
 ## How it works
 

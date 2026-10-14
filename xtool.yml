@@ -1,0 +1,5 @@
+version: 1
+bundleID: com.ssnn.Ghosted
+product: Ghosted
+infoPath: Config/Ghosted-xtool-Info.plist
+iconPath: Ghosted/Assets.xcassets/AppIcon.appiconset/icon-ios-1024x1024.png

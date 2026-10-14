@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 
 /// Native bridge shell for the idevice / CoreDevice / RSD path.
@@ -140,3 +141,4 @@ actor IdeviceBackend: DeveloperServicesBackend {
         lastKnownPosition = nil
     }
 }
+#endif

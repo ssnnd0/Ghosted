@@ -9,14 +9,16 @@ Ghosted is a Swift package and iOS app shell for route-aware, camera-aware locat
 
 Everything in this repo compiles and the test suite passes, but **it is still not a working app.** See AUDIT.md.
 
-- Core library: builds clean under Swift 6. 52 unit tests in 10 suites, all passing.
-- App shell: every source file is compiled by a target, and the spoofing stack is
-  composed rather than merely written.
-- Spoofing and alert layers: iOS-only, so invisible to `swift build`. They are type-checked
-  on every push by `Tools/IOSTypeCheck/check.sh`, wired into `.github/workflows/app-typecheck.yml`.
+- Core library: builds clean under Swift 6. 136 unit tests in 20 suites, all passing.
+- App shell, spoofing, and alert sources are included in both the Xcode app target and the
+  SwiftPM `Ghosted` library product used by xtool. iOS-only sources are guarded so host
+  SwiftPM builds retain the non-iOS app stub.
+- `Tools/IOSTypeCheck/check.sh` type-checks the iOS-only sources against stub SDK modules
+  on every push via `.github/workflows/app-typecheck.yml`; it complements, but does not
+  replace, a real iOS build.
 - Device runtime contract: not implemented in compiled code; live validation must
   happen on a real iPhone. `IdeviceBackend` is a state skeleton with no FFI behind it,
-  so the session will reach "ready" and then push nothing.
+  so the session reports that the backend is unavailable instead of claiming it is ready.
 
 ## Architecture
 
@@ -27,9 +29,12 @@ The repo is intentionally split:
 - **Spoofing layer**: pairing, DDI management, route streaming, loopback reachability, heartbeat and recovery
 - **Alert layer**: proximity warning logic while a fake GPS stream is active
 
-`Sources/Spoofing/`, `Sources/Alerts/` and `Sources/Ghosted/` are compiled by the
-Xcode app target only — they import UIKit/AVFoundation/CoreLocation, so neither
-`GhostedCore` nor the SwiftPM `Ghosted` target can type-check them.
+The Xcode app target and SwiftPM `Ghosted` product both compile
+`Sources/Ghosted/`, `Sources/Spoofing/`, and `Sources/Alerts/`. The `Ghosted` product
+is packaged as an iOS app by xtool; its app metadata and icon are configured in
+`xtool.yml` and `Config/Ghosted-xtool-Info.plist`. The storyboard and asset catalog
+remain Xcode resources; xtool uses the app-icon PNG directly and does not compile the
+launch-screen storyboard.
 
 ## Quick start
 
@@ -42,6 +47,16 @@ Xcode app target only — they import UIKit/AVFoundation/CoreLocation, so neithe
 
 3. Use the iOS app only on a device that satisfies the runtime contract below.
 
+After installing and setting up xtool (including its iOS SDK and Apple ID configuration),
+build, sign, and install the SwiftPM app product with:
+
+```bash
+xtool dev
+```
+
+Signing and installation do not make the device location channel functional:
+`IdeviceBackend` remains a state skeleton with no FFI behind it.
+
 ## Runtime checklist for the iPhone
 
 Use this on the actual device before claiming the spoofing flow works.
@@ -52,8 +67,8 @@ Use this on the actual device before claiming the spoofing flow works.
 4. Loopback VPN active and device connected to Wi‑Fi
 5. Matching DDI mounted for the installed iOS build
 6. CoreDevice/RSD location channel opened and heartbeat maintained
-7. Background audio + location modes — **enabled** in `Ghosted/Info.plist` and armed
-   by `BackgroundKeepAlive` once the session is up
+7. Background audio + location modes — **enabled** in `Ghosted/Info.plist` (Xcode) or
+   `Config/Ghosted-xtool-Info.plist` (xtool), and armed by `BackgroundKeepAlive`
 8. Real route push validated while the screen is locked
 9. Route and camera logic confirmed against the actual device GPS stream
 
@@ -73,19 +88,18 @@ The live runtime contract is defined by these requirements:
 
 ## Verification
 
-Two independent checks cover the repo, because `swift build` cannot see the iOS app layer:
+These checks cover the portable logic and the iOS-only app source:
 
 ```bash
-swift test                        # 52 tests, 10 suites, all against GhostedCore
+swift test                        # 136 tests, 20 suites, all against GhostedCore
 Tools/IOSTypeCheck/check.sh 6     # type-check Sources/Spoofing, Sources/Alerts, GhostedApp
 python3 Tools/validate-pbxproj.py # check the Xcode project file for structural errors
 ```
 
-`swift test` covers the portable logic. It compiles only the `Package.swift` targets, so on its
-own it says nothing about the roughly half of `Sources/` that belongs to the Xcode app target.
-`check.sh` closes that gap on any host with a Swift toolchain, using stub modules in place of the
-iOS SDK. It is a type-check, not a build, and it cannot check `@objc`/`#selector` — see
-`Tools/IOSTypeCheck/README.md` for exactly what it does and does not prove.
+`swift test` covers the portable logic. Host builds compile the app target's non-iOS stub;
+`check.sh` separately type-checks the iOS code on any host with a Swift toolchain, using stub
+modules in place of the iOS SDK. It is a type-check, not a build, and it cannot check
+`@objc`/`#selector` — see `Tools/IOSTypeCheck/README.md` for exactly what it does and does not prove.
 
 CI runs all of them: `swift.yml` for the package, `app-typecheck.yml` for the app layer
 and project structure, and `build-ipa.yml` for a real Xcode build of the app itself.
@@ -97,12 +111,12 @@ and project structure, and `build-ipa.yml` for a real Xcode build of the app its
 - README.md
 - XCODE.md
 - LICENSE
+- xtool.yml              xtool app product, bundle ID, plist overlay, and icon
 - Ghosted.xcodeproj/     Xcode app + framework targets
-- Config/                an intentionally empty entitlements file
+- Config/                entitlements and xtool app metadata
 - Ghosted/               Info.plist, storyboard, asset catalog
 - Sources/               GhostedCore (portable), Ghosted (app shell), Spoofing, Alerts
 - Tests/                 SwiftPM tests for GhostedCore
-- Config/                the app's entitlements file (empty by design — no private entitlements needed)
 - ExportOptions.plist    for a signed local archive (`xcodebuild -exportArchive`)
 - Tools/IOSTypeCheck/    stub-SDK type-check harness for the iOS-only app layer
 - Tools/validate-pbxproj.py  structural check of the Xcode project file

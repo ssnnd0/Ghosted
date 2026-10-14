@@ -1,9 +1,8 @@
 // Composition root for the on-device spoofing stack. iOS-only.
 //
 // The classes it wires together live in `Sources/Spoofing/` and `Sources/Alerts/`,
-// which are in no SwiftPM target (they need UIKit / AVFoundation / Network /
-// Security). This file is inside the SwiftPM `Ghosted` target's path, so it has to
-// compile on macOS too — hence the guard. The Xcode app target compiles it for real.
+// which are part of the shared SwiftPM/Xcode app module. This file is inside the
+// SwiftPM target's source path, so it has to compile on macOS too — hence the guard.
 
 #if os(iOS)
 import Foundation

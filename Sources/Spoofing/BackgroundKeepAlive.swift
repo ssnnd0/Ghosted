@@ -1,3 +1,4 @@
+#if os(iOS)
 import AVFoundation
 import CoreLocation
 
@@ -107,3 +108,4 @@ final class BackgroundKeepAlive: NSObject, CLLocationManagerDelegate, @unchecked
         // Intentionally empty. The app's own source of truth is RouteStreamer, not CoreLocation.
     }
 }
+#endif

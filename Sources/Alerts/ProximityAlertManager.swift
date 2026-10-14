@@ -1,3 +1,4 @@
+#if os(iOS)
 import AVFoundation
 import GhostedCore
 import UIKit
@@ -50,3 +51,4 @@ final class ProximityAlertManager {
         onAlert?(alert)                                   // drive the on-screen banner from here
     }
 }
+#endif

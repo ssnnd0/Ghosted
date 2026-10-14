@@ -1,6 +1,6 @@
 # Ghosted — architecture notes
 
-**Status:** the portable library compiles and its 52 tests pass; the iOS app layer is type-checked on every push against stub SDK modules (`Tools/IOSTypeCheck/`). The native `idevice` layer is still a skeleton with no FFI behind it. Swift 6 language mode, iOS 17.4+.
+**Status:** the portable library compiles and its 136 tests pass; the iOS app layer is type-checked on every push against stub SDK modules (`Tools/IOSTypeCheck/`). The native `idevice` layer is still a skeleton with no FFI behind it. Swift 6 language mode, iOS 17.4+.
 
 ## Where the original prompt's premises were wrong
 
@@ -23,6 +23,8 @@ Ghosted/
 ├── ARCHITECTURE.md
 ├── Config/
 │   └── Ghosted.entitlements            intentionally empty — this design needs none
+│   └── Ghosted-xtool-Info.plist        app metadata overlay used by xtool
+├── xtool.yml                           SwiftPM app product, bundle ID, icon, plist overlay
 ├── Sources/
 │   ├── GhostedCore/                    portable, Foundation-only, host-testable
 │   │   ├── GeoMath.swift                haversine, bearings, segment distance, RoutePath, polyline codec
@@ -59,18 +61,17 @@ There is no bundled `cameras.geojson`: drop your own DeFlock/OSM export into the
 Documents folder (exposed over Finder via `UIFileSharingEnabled`). Until then the camera
 index is empty and proximity alerts are inert — the route stream still works.
 
-Everything under `Sources/Spoofing` and `Sources/Alerts` is compiled by the **Xcode app
-target only**. Those files import UIKit/AVFoundation/CoreLocation/Network/Security, so
-they are iOS-only by construction and belong to neither the portable `GhostedCore`
-target nor the SwiftPM `Ghosted` target. `swift test` does not type-check them;
-`Tools/IOSTypeCheck/check.sh` does, against stub SDK modules, on every push.
+`Sources/Ghosted`, `Sources/Spoofing`, and `Sources/Alerts` are compiled by both the
+**Xcode app target** and the SwiftPM `Ghosted` library product. xtool packages that
+product as the iOS app. `GhostedCore` remains a separate portable library dependency.
+The iOS-specific sources use `#if os(iOS)` guards so host SwiftPM builds can still build
+the non-iOS app stub; `Tools/IOSTypeCheck/check.sh` flips those guards and type-checks
+the iOS implementation against stub SDK modules on every push.
 
-`Sources/Ghosted` is compiled by *both* the Xcode app target and the SwiftPM `Ghosted`
-target, so the two build systems share one entry point. Because the SwiftPM target also
-builds for macOS, every iOS-only file there wraps itself in `#if os(iOS)`:
-`GhostedApp.swift` has a host stub, and `SpoofingSession.swift` / `RouteStreamer.swift`
-resolve to nothing off-iOS. Adding a new file to `Sources/Ghosted` without that guard
-will break `swift build`, because its dependencies live in targets SwiftPM cannot see.
+The Xcode app compiles `Ghosted/LaunchScreen.storyboard` and the full asset catalog.
+xtool uses the 1024px icon directly and does not compile storyboards, so its plist
+overlay intentionally omits `UILaunchStoryboardName`; the app window and UI are created
+programmatically by `AppDelegate`.
 
 On iOS the entry point is `@main` on `AppDelegate`; off-iOS it is a `@main` stub
 struct. The same file, one logical entry point per platform.
