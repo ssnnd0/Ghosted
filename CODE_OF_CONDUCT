@@ -1,1 +1,16 @@
-This software has been created purely for the purposes of academic research. It is not intended to be used to attack, steal, or harm systems except where explicitly authorized. Project maintainers are not responsible or liable for misuse of the software. Use responsibly.
+This project develops privacy-first navigation and anti-spoofing tools for research and defensive development.
+
+Permitted use
+- Privacy-preserving navigation, testing and evaluation with explicit authorization, and research to detect or mitigate location spoofing.
+
+Prohibited use
+- Stalking, harassment, unauthorized tracking, bypassing security, impersonation, fraud, or any unlawful activity.
+
+Legal & ethics
+- Comply with local laws and third-party terms. Obtain written permission before testing on devices, networks, or services you do not own.
+
+Security
+- Report vulnerabilities privately to the maintainers for responsible disclosure.
+
+Disclaimer
+- Maintainers provide this software for defensive research only and are not liable for misuse. Use responsibly and ethically.
